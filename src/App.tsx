@@ -346,7 +346,7 @@ export default function App() {
 }
 
 function StockTickScreen({ onBack, onAddTyre, onFinish }: { onBack: () => void, onAddTyre: () => void, onFinish: () => void }) {
-  const [mode, setMode] = useState<'select' | 'brands' | 'vehicle'>('select');
+  const [mode, setMode] = useState<'select' | 'brands' | 'vehicle' | 'oldTyres'>('select');
   const [searchQuery, setSearchQuery] = useState('');
   const [filterTab, setFilterTab] = useState<'matched' | 'discrepancy' | 'pending'>('pending');
   const [expandedBrand, setExpandedBrand] = useState<string | null>(null);
@@ -509,6 +509,93 @@ function StockTickScreen({ onBack, onAddTyre, onFinish }: { onBack: () => void, 
             </div>
           </div>
         </div>
+
+        {/* Add Tyre Bottom Sheet for empty state */}
+        <AnimatePresence>
+          {isAddTyreOpen && (
+            <>
+              <motion.div 
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                onClick={() => setIsAddTyreOpen(false)}
+                className="absolute inset-0 bg-[#000000]/40 backdrop-blur-sm z-40"
+              />
+              <motion.div 
+                initial={{ y: "100%" }}
+                animate={{ y: 0 }}
+                exit={{ y: "100%" }}
+                transition={{ type: "spring", damping: 25, stiffness: 200 }}
+                className="absolute bottom-0 left-0 right-0 bg-white rounded-t-[2rem] z-50 flex flex-col max-h-[85%]"
+              >
+                <div className="flex justify-center pt-3 pb-2">
+                  <div className="w-10 h-1 bg-[#d1d5db] rounded-full"></div>
+                </div>
+                
+                <div className="flex items-center justify-between px-6 pb-3 border-b border-[#e5e7eb]">
+                  <h3 className="text-[18px] font-bold text-[#111827]">Add Tyre</h3>
+                  <button onClick={() => setIsAddTyreOpen(false)} className="w-8 h-8 flex items-center justify-center text-[#9ca3af] hover:text-[#111827] transition-colors">
+                    <X className="w-5 h-5 stroke-[2.5]" />
+                  </button>
+                </div>
+
+                <div className="flex-1 overflow-y-auto px-6 py-5 [&::-webkit-scrollbar]:hidden" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+                  {/* Dropdowns */}
+                  <div className="flex flex-col gap-3 mb-5">
+                    <div className="relative">
+                      <select className="w-full appearance-none bg-[#f3f4f6] hover:bg-[#e5e7eb]/80 border-0 rounded-2xl px-5 py-4 text-[14px] font-extrabold text-[#111827] focus:outline-none focus:ring-2 focus:ring-[#ef4444]/20 transition-all">
+                        <option value="" disabled selected>Select Brand</option>
+                        <option value="MRF">MRF</option>
+                        <option value="CEAT">CEAT</option>
+                        <option value="Apollo">Apollo</option>
+                        <option value="Michelin">Michelin</option>
+                        <option value="Bridgestone">Bridgestone</option>
+                        <option value="JK Tyre">JK Tyre</option>
+                      </select>
+                      <ChevronRight className="absolute right-5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#111827] rotate-90 pointer-events-none" />
+                    </div>
+                    <div className="relative">
+                      <select className="w-full appearance-none bg-[#f3f4f6] hover:bg-[#e5e7eb]/80 border-0 rounded-2xl px-5 py-4 text-[14px] font-extrabold text-[#111827] focus:outline-none focus:ring-2 focus:ring-[#ef4444]/20 transition-all">
+                        <option value="" disabled selected>Select Size</option>
+                        <option value="155/80/R13">155/80/R13</option>
+                        <option value="165/70/R14">165/70/R14</option>
+                        <option value="165/80/R14">165/80/R14</option>
+                        <option value="185/65/R15">185/65/R15</option>
+                        <option value="205/55/R16">205/55/R16</option>
+                      </select>
+                      <ChevronRight className="absolute right-5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#111827] rotate-90 pointer-events-none" />
+                    </div>
+                  </div>
+
+                  {/* Upload Image */}
+                  <label className="w-full block cursor-pointer">
+                    <div className="border border-[#e5e7eb] bg-[#f8f9fa] hover:bg-[#f3f4f6]/50 hover:border-[#ef4444]/30 rounded-2xl p-6 flex flex-col items-center justify-center gap-2.5 transition-all group">
+                      <div className="w-12 h-12 rounded-full bg-[#fef2f2] text-[#ef4444] flex items-center justify-center transition-colors group-hover:bg-[#ef4444] group-hover:text-white">
+                        <Camera className="w-5 h-5 stroke-[2.2]" />
+                      </div>
+                      <div className="text-center">
+                        <p className="text-[13px] font-extrabold text-[#111827] mb-0.5">Upload Tyre Image</p>
+                        <p className="text-[11px] text-[#627085] font-semibold">Tap to upload photo or invoice</p>
+                      </div>
+                    </div>
+                    <input type="file" accept="image/*" className="hidden" />
+                  </label>
+                </div>
+
+                {/* Save Button */}
+                <div className="px-6 pb-6 pt-2">
+                  <button 
+                    onClick={() => setIsAddTyreOpen(false)}
+                    className="w-full py-4 bg-[#ef4444] text-white rounded-xl font-bold text-[15px] shadow-[0_4px_12px_rgba(239,68,68,0.25)] active:scale-[0.98] transition-transform flex items-center justify-center gap-2"
+                  >
+                    <Save className="w-4 h-4 stroke-[2.5]" />
+                    Save to Inventory
+                  </button>
+                </div>
+              </motion.div>
+            </>
+          )}
+        </AnimatePresence>
       </div>
     );
   }
@@ -527,11 +614,9 @@ function StockTickScreen({ onBack, onAddTyre, onFinish }: { onBack: () => void, 
             <button onClick={() => { setSimulateEmpty(true); setInventory([]); }} className="px-2 py-1 text-[9px] font-bold text-[#627085] hover:text-[#000000] rounded transition-colors">Empty</button>
           </div>
         </div>
-
         <div className="flex-1 px-5 pt-5 pb-8 overflow-y-auto custom-scrollbar">
           {/* Session Date */}
           <div className="mb-6 mt-1">
-            <p className="text-[11px] font-bold text-[#627085] uppercase tracking-wider mb-1">Session Date</p>
             <h2 className="text-[22px] font-extrabold text-[#000000] tracking-tight">Monday, Mar 23</h2>
           </div>
 
@@ -550,6 +635,7 @@ function StockTickScreen({ onBack, onAddTyre, onFinish }: { onBack: () => void, 
                 Select <ChevronRight className="w-3.5 h-3.5" />
               </span>
             </button>
+
             <button 
               onClick={() => setMode('vehicle')}
               className="flex flex-col items-start p-4 bg-white border border-[#e5e7eb] rounded-2xl text-left active:scale-[0.98] transition-all hover:shadow-md hover:border-[#ef4444]/30 group"
@@ -560,6 +646,25 @@ function StockTickScreen({ onBack, onAddTyre, onFinish }: { onBack: () => void, 
               <p className="text-[15px] font-bold text-[#000000] mb-1">By Vehicle</p>
               <p className="text-[11px] text-[#627085] font-semibold leading-tight flex-1">Audit grouped by Two/Four Wheelers...</p>
               <span className="text-[12px] font-bold text-[#ef4444] mt-3.5 flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+                Select <ChevronRight className="w-3.5 h-3.5" />
+              </span>
+            </button>
+          </div>
+
+          {/* Old Tyres Card */}
+          <div className="mb-6">
+            <button 
+              onClick={() => setMode('oldTyres')}
+              className="w-full flex items-center gap-4 p-4 bg-white border border-[#e5e7eb] rounded-2xl text-left active:scale-[0.98] transition-all hover:shadow-md hover:border-[#ef4444]/30 group"
+            >
+              <div className="w-10 h-10 rounded-full bg-[#fef2f2] flex items-center justify-center text-[#ef4444] transition-colors group-hover:bg-[#ef4444] group-hover:text-white shrink-0">
+                <History className="w-5 h-5 stroke-[2]" />
+              </div>
+              <div className="flex-1">
+                <p className="text-[15px] font-bold text-[#000000] mb-0.5">By Old Tyres</p>
+                <p className="text-[11px] text-[#627085] font-semibold leading-tight">Count old/used tyre stock</p>
+              </div>
+              <span className="text-[12px] font-bold text-[#ef4444] flex items-center gap-1 group-hover:translate-x-1 transition-transform shrink-0">
                 Select <ChevronRight className="w-3.5 h-3.5" />
               </span>
             </button>
@@ -624,6 +729,55 @@ function StockTickScreen({ onBack, onAddTyre, onFinish }: { onBack: () => void, 
     );
   }
 
+  // Old Tyres screen
+  if (mode === 'oldTyres') {
+    return (
+      <div className="flex flex-col h-full relative rounded-[2.5rem] overflow-hidden bg-[#f8f9fa]">
+        <div className="flex items-center justify-between px-6 py-5 bg-white z-10 border-b border-[#e5e7eb] shrink-0">
+          <button onClick={() => setMode('select')} aria-label="Go back" className="text-[#000000] hover:bg-slate-100 rounded-full transition-colors">
+            <ArrowLeft className="w-6 h-6 stroke-[2.5]" />
+          </button>
+          <h1 className="text-[18px] font-bold text-[#000000] tracking-tight">Old Tyres</h1>
+          <div className="w-6 h-6"></div>
+        </div>
+
+        <div className="flex-1 px-5 pt-6">
+          <p className="text-[11px] font-bold text-[#9ca3af] uppercase tracking-wider mb-4">Enter old tyre count</p>
+          
+          <div className="bg-white border border-[#e5e7eb] rounded-xl overflow-hidden">
+            <div className="flex items-center justify-between p-4 border-b border-[#e5e7eb]">
+              <p className="text-[14px] font-bold text-[#111827]">Car</p>
+              <input 
+                type="number" 
+                defaultValue="0"
+                className="w-[64px] h-[36px] text-center border border-[#d1d5db] rounded-lg text-[14px] font-bold text-[#111827] focus:outline-none focus:ring-2 focus:ring-[#ef4444]/20 focus:border-[#ef4444]/30 transition-all"
+                style={{ fontVariantNumeric: 'tabular-nums' }}
+              />
+            </div>
+            <div className="flex items-center justify-between p-4">
+              <p className="text-[14px] font-bold text-[#111827]">Bike</p>
+              <input 
+                type="number" 
+                defaultValue="0"
+                className="w-[64px] h-[36px] text-center border border-[#d1d5db] rounded-lg text-[14px] font-bold text-[#111827] focus:outline-none focus:ring-2 focus:ring-[#ef4444]/20 focus:border-[#ef4444]/30 transition-all"
+                style={{ fontVariantNumeric: 'tabular-nums' }}
+              />
+            </div>
+          </div>
+        </div>
+
+        <div className="p-5 bg-white border-t border-[#e5e7eb]">
+          <button 
+            onClick={() => setMode('select')}
+            className="w-full py-4 bg-[#ef4444] text-white rounded-xl font-bold text-[15px] shadow-[0_4px_12px_rgba(239,68,68,0.25)] active:scale-[0.98] transition-transform"
+          >
+            Submit
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   // Main counting screen
   const groupKey = mode === 'brands' ? 'brand' : 'category';
   const groups = mode === 'brands' ? brands : categories;
@@ -636,13 +790,7 @@ function StockTickScreen({ onBack, onAddTyre, onFinish }: { onBack: () => void, 
           <ArrowLeft className="w-6 h-6 stroke-[2.5]" />
         </button>
         <h1 className="text-[18px] font-bold text-[#000000] tracking-tight">Stock Take</h1>
-        <button 
-          onClick={() => setIsAddTyreOpen(true)}
-          className="text-[13px] font-bold text-[#ef4444] hover:text-[#dc2626] transition-colors flex items-center gap-0.5 shrink-0"
-        >
-          <Plus className="w-4.5 h-4.5 stroke-[2.5]" />
-          Add
-        </button>
+        <div className="w-6 h-6"></div>
       </div>
 
       {/* Date + Toggle + Search */}
@@ -730,9 +878,23 @@ function StockTickScreen({ onBack, onAddTyre, onFinish }: { onBack: () => void, 
                             key={item.id} 
                             className="flex items-center justify-between py-2"
                           >
-                            <p className="text-[14px] font-bold text-[#000000]">
-                              {mode === 'vehicle' && <span>{item.brand} </span>}{item.model} {item.size}
-                            </p>
+                            <div>
+                              <p className="text-[14px] font-bold text-[#000000]">
+                                {mode === 'vehicle' && <span>{item.brand} </span>}{item.model} {item.size}
+                              </p>
+                              <p className="text-[10px] text-[#9ca3af] font-medium mt-0.5">Last audited: {
+                                item.id === 1 ? '2 days ago' :
+                                item.id === 2 ? '3 days ago' :
+                                item.id === 3 ? 'Yesterday' :
+                                item.id === 4 ? '4 days ago' :
+                                item.id === 5 ? 'Yesterday' :
+                                item.id === 6 ? '5 days ago' :
+                                item.id === 7 ? '3 days ago' :
+                                item.id === 8 ? '2 days ago' :
+                                item.id === 9 ? 'Yesterday' :
+                                '4 days ago'
+                              }</p>
+                            </div>
                             <input 
                               type="number"
                               value={tempCounts[item.id] ?? (item.counted !== null ? String(item.counted) : '')}
@@ -783,7 +945,7 @@ function StockTickScreen({ onBack, onAddTyre, onFinish }: { onBack: () => void, 
           <div className="w-10 h-10 rounded-full bg-[#fef2f2] text-[#ef4444] flex items-center justify-center mb-2 group-hover:bg-[#ef4444] group-hover:text-white transition-colors">
             <Plus className="w-5 h-5 stroke-[2.5]" />
           </div>
-          <p className="text-[14px] font-bold text-[#000000] mb-0.5">Add Brand or Tyre</p>
+          <p className="text-[14px] font-bold text-[#000000] mb-0.5">Add Tyres</p>
           <p className="text-[12px] text-[#627085] font-medium">Can't find a brand or size? Register it here.</p>
         </button>
       </div>
@@ -814,18 +976,23 @@ function StockTickScreen({ onBack, onAddTyre, onFinish }: { onBack: () => void, 
               animate={{ y: 0 }}
               exit={{ y: "100%" }}
               transition={{ type: "spring", damping: 25, stiffness: 200 }}
-              className="absolute bottom-0 left-0 right-0 bg-white rounded-t-[2rem] z-50 p-6"
+              className="absolute bottom-0 left-0 right-0 bg-white rounded-t-[2rem] z-50 flex flex-col max-h-[85%]"
             >
-              <div className="flex justify-center mb-4">
+              <div className="flex justify-center pt-3 pb-2">
                 <div className="w-10 h-1 bg-[#d1d5db] rounded-full"></div>
               </div>
-              <h3 className="text-[18px] font-bold text-[#000000] mb-1">Add New Size</h3>
-              <p className="text-[13px] text-[#627085] mb-5">{mode === 'brands' ? 'Brand' : 'Category'}: <span className="font-bold text-[#000000]">{showManualAdd}</span></p>
-              
-              <div className="flex flex-col gap-3 mb-5">
-                {mode === 'vehicle' && (
+              <div className="flex items-center justify-between px-6 pb-3 border-b border-[#e5e7eb]">
+                <h3 className="text-[18px] font-bold text-[#111827]">Add New Size</h3>
+                <button onClick={() => setShowManualAdd(null)} className="w-8 h-8 flex items-center justify-center text-[#9ca3af] hover:text-[#111827] transition-colors">
+                  <X className="w-5 h-5 stroke-[2.5]" />
+                </button>
+              </div>
+
+              <div className="flex-1 overflow-y-auto px-6 py-5">
+                {/* Dropdowns */}
+                <div className="flex flex-col gap-3 mb-5">
                   <div className="relative">
-                    <select id="manual-brand" className="w-full appearance-none bg-white border border-[#d1d5db] rounded-xl px-4 py-3.5 text-[14px] font-bold text-[#000000] focus:outline-none focus:ring-2 focus:ring-[#ef4444]/20 focus:border-[#ef4444]/30 transition-all">
+                    <select id="manual-brand" className="w-full appearance-none bg-white border border-[#d1d5db] rounded-xl px-4 py-3.5 text-[14px] font-bold text-[#111827] focus:outline-none focus:ring-2 focus:ring-[#ef4444]/20 focus:border-[#ef4444]/30 transition-all">
                       <option value="" disabled selected>Select Brand</option>
                       <option value="MRF">MRF</option>
                       <option value="CEAT">CEAT</option>
@@ -834,67 +1001,76 @@ function StockTickScreen({ onBack, onAddTyre, onFinish }: { onBack: () => void, 
                       <option value="Bridgestone">Bridgestone</option>
                       <option value="JK Tyre">JK Tyre</option>
                     </select>
-                    <ChevronRight className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[#627085] rotate-90 pointer-events-none" />
+                    <ChevronRight className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[#9ca3af] rotate-90 pointer-events-none" />
                   </div>
-                )}
-                <div className="relative">
-                  <select id="manual-model" className="w-full appearance-none bg-white border border-[#d1d5db] rounded-xl px-4 py-3.5 text-[14px] font-bold text-[#000000] focus:outline-none focus:ring-2 focus:ring-[#ef4444]/20 focus:border-[#ef4444]/30 transition-all">
-                    <option value="" disabled selected>Select Model</option>
-                    <option value="4G">4G</option>
-                    <option value="ZLX">ZLX</option>
-                    <option value="Milaze X3">Milaze X3</option>
-                    <option value="SecuraDrive">SecuraDrive</option>
-                    <option value="Amazer 4G">Amazer 4G</option>
-                    <option value="Alnac 4GS">Alnac 4GS</option>
-                    <option value="Energy XM2">Energy XM2</option>
-                    <option value="B290">B290</option>
-                    <option value="Blaze">Blaze</option>
-                  </select>
-                  <ChevronRight className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[#627085] rotate-90 pointer-events-none" />
+                  <div className="relative">
+                    <select id="manual-size" className="w-full appearance-none bg-white border border-[#d1d5db] rounded-xl px-4 py-3.5 text-[14px] font-bold text-[#111827] focus:outline-none focus:ring-2 focus:ring-[#ef4444]/20 focus:border-[#ef4444]/30 transition-all">
+                      <option value="" disabled selected>Select Size</option>
+                      <option value="145/80/R12">145/80/R12</option>
+                      <option value="155/80/R13">155/80/R13</option>
+                      <option value="165/70/R14">165/70/R14</option>
+                      <option value="165/80/R14">165/80/R14</option>
+                      <option value="175/80/R14">175/80/R14</option>
+                      <option value="185/65/R15">185/65/R15</option>
+                      <option value="195/55/R16">195/55/R16</option>
+                      <option value="205/55/R16">205/55/R16</option>
+                    </select>
+                    <ChevronRight className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[#9ca3af] rotate-90 pointer-events-none" />
+                  </div>
+                  {mode === 'vehicle' && (
+                    <div className="relative">
+                      <select className="w-full appearance-none bg-white border border-[#d1d5db] rounded-xl px-4 py-3.5 text-[14px] font-bold text-[#111827] focus:outline-none focus:ring-2 focus:ring-[#ef4444]/20 focus:border-[#ef4444]/30 transition-all">
+                        <option value="" disabled selected>Select Vehicle Type</option>
+                        <option value="Four Wheeler">Four Wheeler</option>
+                        <option value="Two Wheeler">Two Wheeler</option>
+                        <option value="Three Wheeler">Three Wheeler</option>
+                        <option value="Commercial">Commercial</option>
+                      </select>
+                      <ChevronRight className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[#9ca3af] rotate-90 pointer-events-none" />
+                    </div>
+                  )}
                 </div>
-                <div className="relative">
-                  <select id="manual-size" className="w-full appearance-none bg-white border border-[#d1d5db] rounded-xl px-4 py-3.5 text-[14px] font-bold text-[#000000] focus:outline-none focus:ring-2 focus:ring-[#ef4444]/20 focus:border-[#ef4444]/30 transition-all">
-                    <option value="" disabled selected>Select Size</option>
-                    <option value="145/80/R12">145/80/R12</option>
-                    <option value="155/80/R13">155/80/R13</option>
-                    <option value="165/70/R14">165/70/R14</option>
-                    <option value="165/80/R14">165/80/R14</option>
-                    <option value="175/80/R14">175/80/R14</option>
-                    <option value="185/65/R15">185/65/R15</option>
-                    <option value="195/55/R16">195/55/R16</option>
-                    <option value="205/55/R16">205/55/R16</option>
-                    <option value="205/60/R16">205/60/R16</option>
-                  </select>
-                  <ChevronRight className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[#627085] rotate-90 pointer-events-none" />
-                </div>
+
+                {/* Upload Image */}
+                <label className="w-full block cursor-pointer">
+                  <div className="border-2 border-dashed border-[#e5e7eb] rounded-2xl p-5 flex flex-col items-center justify-center gap-2 hover:border-[#ef4444]/40 transition-colors">
+                    <div className="w-11 h-11 rounded-full bg-[#fef2f2] flex items-center justify-center">
+                      <Camera className="w-5 h-5 text-[#ef4444] stroke-[2]" />
+                    </div>
+                    <p className="text-[13px] font-bold text-[#111827]">Upload Tyre Image</p>
+                    <p className="text-[11px] text-[#9ca3af]">Tap to upload photo or invoice</p>
+                  </div>
+                  <input type="file" accept="image/*" className="hidden" />
+                </label>
               </div>
 
-              <button 
-                onClick={() => {
-                  const modelEl = document.getElementById('manual-model') as HTMLSelectElement;
-                  const sizeEl = document.getElementById('manual-size') as HTMLSelectElement;
-                  const brandEl = document.getElementById('manual-brand') as HTMLSelectElement;
-                  const model = modelEl?.value || '';
-                  const size = sizeEl?.value || '';
-                  const brand = mode === 'brands' ? showManualAdd : (brandEl?.value || '');
-                  const category = mode === 'vehicle' ? showManualAdd : 'Four Wheeler';
-                  if (model && size && brand) {
-                    setInventory(prev => [...prev, {
-                      id: Date.now(),
-                      brand: brand,
-                      model: model,
-                      size: size,
-                      expected: 0,
-                      counted: null,
-                      category: category
-                    }]);
-                    setShowManualAdd(null);
-                  }
-                }}
-                className="w-full py-4 bg-[#ef4444] text-white rounded-xl font-bold text-[15px] shadow-[0_4px_12px_rgba(239,68,68,0.25)] active:scale-[0.98] transition-transform"
-              >
-                Add
-              </button>
+              {/* Add Button */}
+              <div className="px-6 pb-6 pt-2">
+                <button 
+                  onClick={() => {
+                    const brandEl = document.getElementById('manual-brand') as HTMLSelectElement;
+                    const sizeEl = document.getElementById('manual-size') as HTMLSelectElement;
+                    const brand = brandEl?.value || (mode === 'brands' ? (showManualAdd || '') : '');
+                    const size = sizeEl?.value || '';
+                    if (brand && size) {
+                      setInventory(prev => [...prev, {
+                        id: Date.now(),
+                        brand: brand,
+                        model: '',
+                        size: size,
+                        expected: 0,
+                        counted: null,
+                        category: mode === 'vehicle' ? (showManualAdd || 'Four Wheeler') : 'Four Wheeler'
+                      }]);
+                      setShowManualAdd(null);
+                    }
+                  }}
+                  className="w-full py-4 bg-[#ef4444] text-white rounded-xl font-bold text-[15px] shadow-[0_4px_12px_rgba(239,68,68,0.25)] active:scale-[0.98] transition-transform flex items-center justify-center gap-2"
+                >
+                  <Save className="w-4 h-4 stroke-[2.5]" />
+                  Save to Inventory
+                </button>
+              </div>
             </motion.div>
           </>
         )}
@@ -1051,189 +1227,144 @@ function StockTickScreen({ onBack, onAddTyre, onFinish }: { onBack: () => void, 
                 animate={{ y: 0 }}
                 exit={{ y: "100%" }}
                 transition={{ type: "spring", damping: 25, stiffness: 200 }}
-                className="absolute bottom-0 left-0 right-0 bg-[#f8f9fa] rounded-t-[2rem] z-50 flex flex-col max-h-[85%] border-t border-[#e5e7eb]"
+                className="absolute bottom-0 left-0 right-0 bg-white rounded-t-[2rem] z-50 flex flex-col max-h-[85%]"
               >
-                {/* Drag handle */}
-                <div className="flex justify-center pt-3 pb-2 bg-white rounded-t-[2rem]">
+                <div className="flex justify-center pt-3 pb-2">
                   <div className="w-10 h-1 bg-[#d1d5db] rounded-full"></div>
                 </div>
-
-                {/* Header */}
-                <div className="flex items-center justify-between px-6 py-4 bg-white border-b border-[#e5e7eb]">
-                  <h2 className="text-[18px] font-bold text-[#000000]">Add Tyre</h2>
-                  <button 
-                    onClick={() => setIsAddTyreOpen(false)}
-                    className="w-8 h-8 rounded-full flex items-center justify-center text-[#627085] hover:text-[#000000] hover:bg-slate-100 transition-all"
-                  >
+                <div className="flex items-center justify-between px-6 pb-3 border-b border-[#e5e7eb]">
+                  <h3 className="text-[18px] font-bold text-[#111827]">Add Tyre</h3>
+                  <button onClick={() => setIsAddTyreOpen(false)} className="w-8 h-8 flex items-center justify-center text-[#9ca3af] hover:text-[#111827] transition-colors">
                     <X className="w-5 h-5 stroke-[2.5]" />
                   </button>
                 </div>
 
-                {/* Scrollable form */}
-                <div className="flex-1 overflow-y-auto px-5 py-6 pb-28 custom-scrollbar">
-                  {/* Upload Tyre Image */}
-                  <div className="mb-6">
-                    <label className="w-full block cursor-pointer">
-                      <div className="border-2 border-dashed border-[#e5e7eb] rounded-2xl p-6 flex flex-col items-center justify-center gap-3 bg-white hover:border-[#ef4444]/40 hover:bg-[#fef2f2]/30 transition-all active:scale-[0.98]">
-                        <div className="w-14 h-14 rounded-2xl bg-[#fef2f2] flex items-center justify-center">
-                          <Camera className="w-6 h-6 text-[#ef4444] stroke-[2]" />
-                        </div>
-                        <div className="text-center">
-                          <p className="text-[15px] font-bold text-[#000000] mb-0.5">Upload Tyre Image</p>
-                          <p className="text-[12px] text-[#627085] font-medium">Tap to upload photo or invoice</p>
-                        </div>
-                      </div>
-                      <input type="file" accept="image/*" className="hidden" />
-                    </label>
-                  </div>
-
-                  {/* Bento Form - Core Details */}
-                  <div className="mb-6">
-                    <h2 className="text-[12px] font-bold text-[#627085] uppercase tracking-wider mb-3 px-1">Tyre Details</h2>
-                    <div className="flex flex-col gap-3">
+                <div className="flex-1 overflow-y-auto px-6 py-5 [&::-webkit-scrollbar]:hidden" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+                  {/* Dropdowns */}
+                  <div className="flex flex-col gap-3 mb-5">
+                    <div className="relative">
+                      <select id="sheet-brand" className="w-full appearance-none bg-[#f3f4f6] hover:bg-[#e5e7eb]/80 border-0 rounded-2xl px-5 py-4 text-[14px] font-extrabold text-[#111827] focus:outline-none focus:ring-2 focus:ring-[#ef4444]/20 transition-all">
+                        <option value="" disabled selected>Select Brand</option>
+                        <option value="MRF">MRF</option>
+                        <option value="CEAT">CEAT</option>
+                        <option value="Apollo">Apollo</option>
+                        <option value="Michelin">Michelin</option>
+                        <option value="Bridgestone">Bridgestone</option>
+                        <option value="JK Tyre">JK Tyre</option>
+                      </select>
+                      <ChevronRight className="absolute right-5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#111827] rotate-90 pointer-events-none" />
+                    </div>
+                    <div className="relative">
+                      <select id="sheet-size" className="w-full appearance-none bg-[#f3f4f6] hover:bg-[#e5e7eb]/80 border-0 rounded-2xl px-5 py-4 text-[14px] font-extrabold text-[#111827] focus:outline-none focus:ring-2 focus:ring-[#ef4444]/20 transition-all">
+                        <option value="" disabled selected>Select Size</option>
+                        <option value="155/80/R13">155/80/R13</option>
+                        <option value="165/70/R14">165/70/R14</option>
+                        <option value="165/80/R14">165/80/R14</option>
+                        <option value="185/65/R15">185/65/R15</option>
+                        <option value="205/55/R16">205/55/R16</option>
+                      </select>
+                      <ChevronRight className="absolute right-5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#111827] rotate-90 pointer-events-none" />
+                    </div>
+                    {mode === 'vehicle' && (
                       <div className="relative">
-                        <select id="sheet-brand" className="w-full appearance-none bg-white border border-[#d1d5db] rounded-xl px-4 py-4 text-[15px] font-bold text-[#000000] focus:outline-none focus:ring-2 focus:ring-[#ef4444]/20 focus:border-[#ef4444]/30 transition-all">
-                          <option value="" disabled selected>Select Brand</option>
-                          <option value="MRF">MRF</option>
-                          <option value="CEAT">CEAT</option>
-                          <option value="Apollo">Apollo</option>
-                          <option value="Michelin">Michelin</option>
-                          <option value="Bridgestone">Bridgestone</option>
-                          <option value="Goodyear">Goodyear</option>
-                          <option value="JK Tyre">JK Tyre</option>
-                        </select>
-                        <ChevronRight className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[#627085] rotate-90 pointer-events-none" />
-                      </div>
-
-                      <div className="relative">
-                        <select id="sheet-model" className="w-full appearance-none bg-white border border-[#d1d5db] rounded-xl px-4 py-4 text-[15px] font-bold text-[#000000] focus:outline-none focus:ring-2 focus:ring-[#ef4444]/20 focus:border-[#ef4444]/30 transition-all">
-                          <option value="" disabled selected>Select Model</option>
-                          <option value="ZLX">ZLX</option>
-                          <option value="Milaze X3">Milaze X3</option>
-                          <option value="Amazer 4G">Amazer 4G</option>
-                          <option value="Energy XM2">Energy XM2</option>
-                          <option value="B290">B290</option>
-                        </select>
-                        <ChevronRight className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[#627085] rotate-90 pointer-events-none" />
-                      </div>
-
-                      <div className="relative">
-                        <select id="sheet-size" className="w-full appearance-none bg-white border border-[#d1d5db] rounded-xl px-4 py-4 text-[15px] font-bold text-[#000000] focus:outline-none focus:ring-2 focus:ring-[#ef4444]/20 focus:border-[#ef4444]/30 transition-all">
-                          <option value="" disabled selected>Select Size</option>
-                          <option value="155/80/R13">155/80 R13</option>
-                          <option value="165/70/R14">165/70 R14</option>
-                          <option value="175/65/R14">175/65 R14</option>
-                          <option value="185/65/R15">185/65 R15</option>
-                          <option value="195/55/R16">195/55 R16</option>
-                          <option value="205/55/R16">205/55 R16</option>
-                          <option value="205/60/R16">205/60 R16</option>
-                        </select>
-                        <ChevronRight className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[#627085] rotate-90 pointer-events-none" />
-                      </div>
-
-                      <div className="relative">
-                        <select id="sheet-category" className="w-full appearance-none bg-white border border-[#d1d5db] rounded-xl px-4 py-4 text-[15px] font-bold text-[#000000] focus:outline-none focus:ring-2 focus:ring-[#ef4444]/20 focus:border-[#ef4444]/30 transition-all">
+                        <select className="w-full appearance-none bg-[#f3f4f6] hover:bg-[#e5e7eb]/80 border-0 rounded-2xl px-5 py-4 text-[14px] font-extrabold text-[#111827] focus:outline-none focus:ring-2 focus:ring-[#ef4444]/20 transition-all">
                           <option value="" disabled selected>Select Vehicle Type</option>
                           <option value="Four Wheeler">Four Wheeler</option>
                           <option value="Two Wheeler">Two Wheeler</option>
                         </select>
-                        <ChevronRight className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[#627085] rotate-90 pointer-events-none" />
+                        <ChevronRight className="absolute right-5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#111827] rotate-90 pointer-events-none" />
                       </div>
-                    </div>
+                    )}
                   </div>
 
                   {/* Stock & Pricing */}
-                  <div className="mb-6">
-                    <h2 className="text-[12px] font-bold text-[#627085] uppercase tracking-wider mb-3 px-1">Stock & Pricing</h2>
-                    <div className="grid grid-cols-2 gap-3">
-                      <div className="bg-white border border-[#d1d5db] rounded-xl p-4 flex flex-col justify-between">
-                        <p className="text-[12px] font-bold text-[#627085] mb-2">Quantity</p>
-                        <div className="flex items-center justify-between">
-                          <button 
-                            onClick={() => setSheetQty(q => Math.max(1, q - 1))}
-                            className="w-9 h-9 rounded-lg bg-white border border-[#d1d5db] flex items-center justify-center text-[#000000] active:scale-90 transition-transform"
-                          >
-                            <Minus className="w-4 h-4 stroke-[3]" />
-                          </button>
-                          <span className="text-[16px] font-bold text-[#000000]" style={{ fontVariantNumeric: 'tabular-nums' }}>{sheetQty}</span>
-                          <button 
-                            onClick={() => setSheetQty(q => q + 1)}
-                            className="w-9 h-9 rounded-lg bg-[#000000] flex items-center justify-center text-white active:scale-90 transition-transform"
-                          >
-                            <Plus className="w-4 h-4 stroke-[3]" />
-                          </button>
-                        </div>
+                  <p className="text-[12px] font-extrabold text-[#627085] uppercase tracking-wider mb-3 mt-6 px-1">Stock & Pricing</p>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="bg-[#f3f4f6] rounded-2xl p-4 flex flex-col justify-between h-[104px]">
+                      <p className="text-[12px] font-extrabold text-[#6b7280]">Quantity</p>
+                      <div className="flex items-center justify-between">
+                        <button 
+                          onClick={() => setSheetQty(q => Math.max(1, q - 1))}
+                          className="w-8 h-8 rounded-full bg-white flex items-center justify-center text-[#111827] active:scale-90 transition-transform shadow-sm border border-[#e5e7eb] hover:bg-slate-50"
+                        >
+                          <Minus className="w-3.5 h-3.5 stroke-[3]" />
+                        </button>
+                        <span className="text-[16px] font-extrabold text-[#111827]" style={{ fontVariantNumeric: 'tabular-nums' }}>{sheetQty}</span>
+                        <button 
+                          onClick={() => setSheetQty(q => q + 1)}
+                          className="w-8 h-8 rounded-full bg-[#ef4444] flex items-center justify-center text-white active:scale-90 transition-transform shadow-sm hover:bg-[#dc2626]"
+                        >
+                          <Plus className="w-3.5 h-3.5 stroke-[3]" />
+                        </button>
                       </div>
-
-                      <div className="bg-white border border-[#d1d5db] rounded-xl p-4">
-                        <p className="text-[12px] font-bold text-[#627085] mb-2">Unit Price</p>
-                        <div className="relative">
-                          <div className="absolute left-3 top-1/2 -translate-y-1/2 text-[#627085] font-bold text-[15px] font-sans">
-                            ₹
-                          </div>
-                          <input 
-                            id="sheet-price"
-                            type="number" 
-                            placeholder="0.00" 
-                            className="w-full bg-[#f8f9fa] border border-[#e5e7eb] rounded-lg pl-7 pr-3 py-2 text-[15px] font-bold text-[#000000] placeholder:text-[#627085] focus:outline-none focus:ring-2 focus:ring-[#ef4444]/20 focus:border-[#ef4444]/30 transition-all"
-                          />
-                        </div>
+                    </div>
+                    <div className="bg-[#f3f4f6] rounded-2xl p-4 flex flex-col justify-between h-[104px]">
+                      <p className="text-[12px] font-extrabold text-[#6b7280]">Unit Price</p>
+                      <div className="relative">
+                        <div className="absolute left-3 top-1/2 -translate-y-1/2 text-[#627085] font-bold text-[15px]">{'\u20B9'}</div>
+                        <input type="number" placeholder="0.00" className="w-full bg-white border border-[#e5e7eb] rounded-xl pl-7 pr-3 py-2 text-[15px] font-bold text-[#111827] placeholder:text-[#9ca3af] focus:outline-none focus:ring-2 focus:ring-[#ef4444]/20 focus:border-[#ef4444]/30 transition-all" />
                       </div>
                     </div>
                   </div>
 
                   {/* Condition */}
-                  <div className="mb-6">
-                    <h2 className="text-[12px] font-bold text-[#627085] uppercase tracking-wider mb-3 px-1">Condition</h2>
-                    <div className="flex gap-2">
-                      {['New', 'Used', 'Retread'].map(cond => (
-                        <button 
+                  <p className="text-[12px] font-extrabold text-[#627085] uppercase tracking-wider mb-3 mt-6 px-1">Condition</p>
+                  <div className="flex gap-2">
+                    {['New', 'Used', 'Retread'].map((cond) => {
+                      const isActive = sheetCondition === cond;
+                      return (
+                        <button
                           key={cond}
+                          type="button"
                           onClick={() => setSheetCondition(cond)}
-                          className={`flex-1 py-3 rounded-xl font-bold text-[13px] transition-transform active:scale-95 ${
-                            sheetCondition === cond ? 'bg-[#000000] text-white' : 'bg-white text-[#627085] border border-[#e5e7eb]'
+                          className={`flex-1 py-3 rounded-xl font-bold text-[13px] transition-all active:scale-95 ${
+                            isActive 
+                              ? 'bg-[#111827] text-white' 
+                              : 'bg-white text-[#627085] border border-[#e5e7eb]'
                           }`}
                         >
                           {cond}
                         </button>
-                      ))}
-                    </div>
+                      );
+                    })}
                   </div>
+
+                  {/* Upload Image - at bottom */}
+                  <label className="w-full block cursor-pointer mt-6">
+                    <div className="border border-[#e5e7eb] bg-[#f8f9fa] hover:bg-[#f3f4f6]/50 hover:border-[#ef4444]/30 rounded-2xl p-6 flex flex-col items-center justify-center gap-2.5 transition-all group">
+                      <div className="w-12 h-12 rounded-full bg-[#fef2f2] text-[#ef4444] flex items-center justify-center transition-colors group-hover:bg-[#ef4444] group-hover:text-white">
+                        <Camera className="w-5 h-5 stroke-[2.2]" />
+                      </div>
+                      <div className="text-center">
+                        <p className="text-[13px] font-extrabold text-[#111827] mb-0.5">Upload Tyre Image</p>
+                        <p className="text-[11px] text-[#627085] font-semibold">Tap to upload photo or invoice</p>
+                      </div>
+                    </div>
+                    <input type="file" accept="image/*" className="hidden" />
+                  </label>
                 </div>
 
-                {/* Bottom Fixed Save Bar */}
-                <div className="absolute bottom-0 left-0 right-0 bg-white border-t border-[#e5e7eb] p-5 z-20">
+                <div className="px-6 pb-6 pt-2">
                   <button 
                     onClick={() => {
                       const brandEl = document.getElementById('sheet-brand') as HTMLSelectElement;
-                      const modelEl = document.getElementById('sheet-model') as HTMLSelectElement;
                       const sizeEl = document.getElementById('sheet-size') as HTMLSelectElement;
-                      const categoryEl = document.getElementById('sheet-category') as HTMLSelectElement;
-                      const priceEl = document.getElementById('sheet-price') as HTMLInputElement;
-                      
                       const brand = brandEl?.value || '';
-                      const model = modelEl?.value || '';
                       const size = sizeEl?.value || '';
-                      const category = categoryEl?.value || 'Four Wheeler';
-                      const price = parseFloat(priceEl?.value || '0');
-                      
-                      if (brand && model && size) {
-                        setInventory(prev => [
-                          ...prev,
-                          {
-                            id: Date.now(),
-                            brand,
-                            model,
-                            size,
-                            expected: sheetQty,
-                            counted: null,
-                            category: category
-                          }
-                        ]);
+                      if (brand && size) {
+                        setInventory(prev => [...prev, {
+                          id: Date.now(),
+                          brand,
+                          model: '',
+                          size,
+                          expected: 0,
+                          counted: null,
+                          category: 'Four Wheeler'
+                        }]);
                         setIsAddTyreOpen(false);
                       }
                     }}
-                    className="w-full py-4 bg-[#ef4444] hover:bg-[#dc2626] text-white rounded-xl font-bold text-[15px] transition-all active:scale-[0.98] flex items-center justify-center gap-2 shadow-[0_8px_24px_rgba(239,68,68,0.2)]"
+                    className="w-full py-4 bg-[#ef4444] text-white rounded-xl font-bold text-[15px] shadow-[0_4px_12px_rgba(239,68,68,0.25)] active:scale-[0.98] transition-transform flex items-center justify-center gap-2"
                   >
                     <Save className="w-4 h-4 stroke-[2.5]" />
                     Save to Inventory
@@ -1515,7 +1646,7 @@ function FullItemListScreen({ audit, onBack, onReAudit }: { audit: any, onBack: 
           onClick={onReAudit}
           className="w-full py-4 bg-[#ef4444] text-white rounded-xl font-bold text-[15px] shadow-[0_4px_12px_rgba(239,68,68,0.25)] active:scale-[0.98] transition-transform"
         >
-          Re-Audit
+          New Audit
         </button>
       </div>
     </motion.div>
