@@ -32,7 +32,10 @@ import {
   Send,
   User,
   MapPin,
-  Bell
+  Bell,
+  Shapes,
+  Car,
+  Aperture
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 
@@ -41,6 +44,16 @@ export default function App() {
   const [currentScreen, setCurrentScreen] = useState<'home' | 'stockTick' | 'addTyre' | 'history'>('home');
   const [syncEnabled, setSyncEnabled] = useState(true);
   const [showSyncDisableModal, setShowSyncDisableModal] = useState(false);
+  const [historyData, setHistoryData] = useState([
+    { id: 'AUD-1048', month: 'Mar', day: '23', time: '10:30 AM', group: 'today', label: 'Morning Audit', items: 10, matched: 8, discrepancies: 2, status: 'review', manager: 'Dravid S.', duration: '45 min', location: 'Main Warehouse' },
+    { id: 'AUD-1047', month: 'Mar', day: '22', time: '10:15 AM', group: 'yesterday', label: 'Daily Count', items: 10, matched: 10, discrepancies: 0, status: 'approved', manager: 'Dravid S.', duration: '40 min', location: 'Main Warehouse' },
+    { id: 'AUD-1046', month: 'Mar', day: '21', time: '11:00 AM', group: 'thisWeek', label: 'Daily Count', items: 10, matched: 9, discrepancies: 1, status: 'approved', manager: 'Mike T.', duration: '38 min', location: 'Main Warehouse' },
+    { id: 'AUD-1045', month: 'Mar', day: '20', time: '09:45 AM', group: 'thisWeek', label: 'Daily Count', items: 10, matched: 10, discrepancies: 0, status: 'approved', manager: 'Dravid S.', duration: '42 min', location: 'Main Warehouse' },
+    { id: 'AUD-1044', month: 'Mar', day: '19', time: '10:00 AM', group: 'thisWeek', label: 'Daily Count', items: 10, matched: 8, discrepancies: 2, status: 'approved', manager: 'Sarah J.', duration: '50 min', location: 'Main Warehouse' },
+    { id: 'AUD-1043', month: 'Mar', day: '18', time: '10:30 AM', group: 'thisWeek', label: 'Daily Count', items: 10, matched: 10, discrepancies: 0, status: 'approved', manager: 'Dravid S.', duration: '35 min', location: 'Main Warehouse' },
+    { id: 'AUD-1042', month: 'Mar', day: '17', time: '09:30 AM', group: 'lastWeek', label: 'Daily Count', items: 10, matched: 10, discrepancies: 0, status: 'approved', manager: 'Mike T.', duration: '55 min', location: 'Main Warehouse' },
+    { id: 'AUD-1041', month: 'Mar', day: '16', time: '10:45 AM', group: 'lastWeek', label: 'Daily Count', items: 10, matched: 9, discrepancies: 1, status: 'approved', manager: 'Dravid S.', duration: '48 min', location: 'Back Storage' },
+  ]);
 
   return (
     <>
@@ -63,7 +76,10 @@ export default function App() {
             <ArrowLeft className="w-6 h-6 stroke-[2.5]" />
           </button>
           <h1 className="text-[18px] font-normal text-[#000000]">Inventory Summary</h1>
-          <button className="text-[#000000] hover:bg-slate-100 rounded-full transition-colors">
+          <button 
+            onClick={() => setCurrentScreen('history')}
+            className="text-[#000000] hover:bg-slate-100 rounded-full transition-colors"
+          >
             <History className="w-6 h-6 stroke-[2]" />
           </button>
         </div>
@@ -482,12 +498,18 @@ export default function App() {
         </div>
           </>
         ) : currentScreen === 'history' ? (
-          <HistoryScreen onBack={() => setCurrentScreen('home')} onReAudit={() => setCurrentScreen('stockTick')} />
+          <HistoryScreen 
+            onBack={() => setCurrentScreen('home')} 
+            onReAudit={() => setCurrentScreen('stockTick')} 
+            historyData={historyData}
+          />
         ) : currentScreen === 'stockTick' ? (
           <StockTickScreen 
             onBack={() => setCurrentScreen('home')} 
             onAddTyre={() => setCurrentScreen('addTyre')}
             onFinish={() => setCurrentScreen('history')}
+            historyData={historyData}
+            setHistoryData={setHistoryData}
           />
         ) : (
           <AddTyreScreen onBack={() => setCurrentScreen('stockTick')} />
@@ -499,8 +521,16 @@ export default function App() {
   );
 }
 
-function StockTickScreen({ onBack, onAddTyre, onFinish }: { onBack: () => void, onAddTyre: () => void, onFinish: () => void }) {
+function StockTickScreen({ onBack, onAddTyre, onFinish, historyData, setHistoryData }: { 
+  onBack: () => void, 
+  onAddTyre: () => void, 
+  onFinish: () => void,
+  historyData: any[],
+  setHistoryData: React.Dispatch<React.SetStateAction<any[]>>
+}) {
   const [mode, setMode] = useState<'select' | 'brands' | 'vehicle' | 'oldTyres'>('select');
+  const [oldCarCount, setOldCarCount] = useState('0');
+  const [oldBikeCount, setOldBikeCount] = useState('0');
   const [searchQuery, setSearchQuery] = useState('');
   const [filterTab, setFilterTab] = useState<'matched' | 'discrepancy' | 'pending'>('pending');
   const [expandedBrand, setExpandedBrand] = useState<string | null>(null);
@@ -781,7 +811,7 @@ function StockTickScreen({ onBack, onAddTyre, onFinish }: { onBack: () => void, 
               className="flex flex-col items-start p-4 bg-white border border-[#e5e7eb] rounded-2xl text-left active:scale-[0.98] transition-all hover:shadow-md hover:border-[#ef4444]/30 group"
             >
               <div className="w-10 h-10 rounded-full bg-[#fef2f2] flex items-center justify-center mb-3 text-[#ef4444] transition-colors group-hover:bg-[#ef4444] group-hover:text-white">
-                <Store className="w-5 h-5 stroke-[2]" />
+                <Shapes className="w-5 h-5 stroke-[2]" />
               </div>
               <p className="text-[15px] font-bold text-[#000000] mb-1">By Brands</p>
               <p className="text-[11px] text-[#627085] font-semibold leading-tight flex-1">Audit grouped by MRF, CEAT, Apollo...</p>
@@ -795,7 +825,7 @@ function StockTickScreen({ onBack, onAddTyre, onFinish }: { onBack: () => void, 
               className="flex flex-col items-start p-4 bg-white border border-[#e5e7eb] rounded-2xl text-left active:scale-[0.98] transition-all hover:shadow-md hover:border-[#ef4444]/30 group"
             >
               <div className="w-10 h-10 rounded-full bg-[#fef2f2] flex items-center justify-center mb-3 text-[#ef4444] transition-colors group-hover:bg-[#ef4444] group-hover:text-white">
-                <LayoutGrid className="w-5 h-5 stroke-[2]" />
+                <Car className="w-5 h-5 stroke-[2]" />
               </div>
               <p className="text-[15px] font-bold text-[#000000] mb-1">By Vehicle</p>
               <p className="text-[11px] text-[#627085] font-semibold leading-tight flex-1">Audit grouped by Two/Four Wheelers...</p>
@@ -812,7 +842,7 @@ function StockTickScreen({ onBack, onAddTyre, onFinish }: { onBack: () => void, 
               className="w-full flex items-center gap-4 p-4 bg-white border border-[#e5e7eb] rounded-2xl text-left active:scale-[0.98] transition-all hover:shadow-md hover:border-[#ef4444]/30 group"
             >
               <div className="w-10 h-10 rounded-full bg-[#fef2f2] flex items-center justify-center text-[#ef4444] transition-colors group-hover:bg-[#ef4444] group-hover:text-white shrink-0">
-                <History className="w-5 h-5 stroke-[2]" />
+                <Aperture className="w-5 h-5 stroke-[2]" />
               </div>
               <div className="flex-1">
                 <p className="text-[15px] font-bold text-[#000000] mb-0.5">By Old Tyres</p>
@@ -903,7 +933,8 @@ function StockTickScreen({ onBack, onAddTyre, onFinish }: { onBack: () => void, 
               <p className="text-[14px] font-bold text-[#111827]">Car</p>
               <input 
                 type="number" 
-                defaultValue="0"
+                value={oldCarCount}
+                onChange={(e) => setOldCarCount(e.target.value)}
                 className="w-[64px] h-[36px] text-center border border-[#d1d5db] rounded-lg text-[14px] font-bold text-[#111827] focus:outline-none focus:ring-2 focus:ring-[#ef4444]/20 focus:border-[#ef4444]/30 transition-all"
                 style={{ fontVariantNumeric: 'tabular-nums' }}
               />
@@ -912,7 +943,8 @@ function StockTickScreen({ onBack, onAddTyre, onFinish }: { onBack: () => void, 
               <p className="text-[14px] font-bold text-[#111827]">Bike</p>
               <input 
                 type="number" 
-                defaultValue="0"
+                value={oldBikeCount}
+                onChange={(e) => setOldBikeCount(e.target.value)}
                 className="w-[64px] h-[36px] text-center border border-[#d1d5db] rounded-lg text-[14px] font-bold text-[#111827] focus:outline-none focus:ring-2 focus:ring-[#ef4444]/20 focus:border-[#ef4444]/30 transition-all"
                 style={{ fontVariantNumeric: 'tabular-nums' }}
               />
@@ -922,7 +954,34 @@ function StockTickScreen({ onBack, onAddTyre, onFinish }: { onBack: () => void, 
 
         <div className="p-5 bg-white border-t border-[#e5e7eb]">
           <button 
-            onClick={() => setMode('select')}
+            onClick={() => {
+              const carQty = parseInt(oldCarCount) || 0;
+              const bikeQty = parseInt(oldBikeCount) || 0;
+              
+              const newId = `AUD-${1041 + historyData.length}`;
+              const newEntry = {
+                id: newId,
+                month: 'Mar',
+                day: '23',
+                time: '10:30 AM',
+                group: 'today',
+                label: 'Old Tyres Audit',
+                items: 2,
+                matched: 2,
+                discrepancies: 0,
+                status: 'approved',
+                manager: 'Dravid S.',
+                duration: '2 min',
+                location: 'Main Warehouse',
+                oldTyresCount: { car: carQty, bike: bikeQty }
+              };
+              setHistoryData(prev => [newEntry, ...prev]);
+              
+              setOldCarCount('0');
+              setOldBikeCount('0');
+              setMode('select');
+              onFinish();
+            }}
             className="w-full py-4 bg-[#ef4444] text-white rounded-xl font-bold text-[15px] shadow-[0_4px_12px_rgba(239,68,68,0.25)] active:scale-[0.98] transition-transform"
           >
             Submit
@@ -1290,9 +1349,14 @@ function StockTickScreen({ onBack, onAddTyre, onFinish }: { onBack: () => void, 
                 <div className="border-t border-[#f3f4f6] pt-4 flex items-center">
                   <div className="flex-1 text-center">
                     <p className="text-[24px] font-bold text-[#000000] leading-none mb-1" style={{ fontVariantNumeric: 'tabular-nums' }}>
-                      {[...new Set(inventory.filter(i => getStatus(i) !== 'pending').map(i => i.brand))].length}
+                      {mode === 'brands' 
+                        ? [...new Set(inventory.filter(i => getStatus(i) !== 'pending').map(i => i.brand))].length
+                        : [...new Set(inventory.filter(i => getStatus(i) !== 'pending').map(i => i.category))].length
+                      }
                     </p>
-                    <p className="text-[10px] font-bold text-[#627085] uppercase tracking-wider">Brands</p>
+                    <p className="text-[10px] font-bold text-[#627085] uppercase tracking-wider">
+                      {mode === 'brands' ? 'Brands' : 'Vehicles'}
+                    </p>
                   </div>
                   <div className="w-[1px] h-10 bg-[#e5e7eb]"></div>
                   <div className="flex-1 text-center">
@@ -1318,7 +1382,22 @@ function StockTickScreen({ onBack, onAddTyre, onFinish }: { onBack: () => void, 
                   <div>
                     <p className="text-[13px] font-bold text-[#000000] mb-0.5">{pendingItems} items not counted</p>
                     <p className="text-[12px] text-[#627085]">
-                      {brands.filter(b => inventory.filter(i => i.brand === b && getStatus(i) === 'pending').length > 0).join(', ')} not counted yet.
+                      {mode === 'brands'
+                        ? brands
+                            .filter(b => inventory.filter(i => i.brand === b && getStatus(i) === 'pending').length > 0)
+                            .map(b => {
+                              const hasCounted = inventory.filter(i => i.brand === b && getStatus(i) !== 'pending').length > 0;
+                              return hasCounted ? `some variants of ${b}` : b;
+                            })
+                            .join(', ')
+                        : categories
+                            .filter(c => inventory.filter(i => i.category === c && getStatus(i) === 'pending').length > 0)
+                            .map(c => {
+                              const hasCounted = inventory.filter(i => i.category === c && getStatus(i) !== 'pending').length > 0;
+                              return hasCounted ? `some variants of ${c}` : c;
+                            })
+                            .join(', ')
+                      } not counted yet.
                     </p>
                   </div>
                 </div>
@@ -1326,20 +1405,34 @@ function StockTickScreen({ onBack, onAddTyre, onFinish }: { onBack: () => void, 
 
               {/* Items Counted */}
               <h3 className="text-[15px] font-bold text-[#000000] mb-3 px-1">Items Counted</h3>
-              <div className="space-y-2.5">
-                {inventory.filter(i => getStatus(i) !== 'pending').map(item => {
-                  return (
-                    <div key={item.id} className="bg-white border border-[#e5e7eb] rounded-xl p-4 flex justify-between items-center">
-                      <div>
-                        <p className="text-[14px] font-bold text-[#000000]">{item.brand} {item.model}</p>
-                        <p className="text-[12px] font-medium text-[#627085]">{item.size}</p>
-                      </div>
-                      <div className="text-right">
-                        <p className="text-[14px] font-bold text-[#000000]" style={{ fontVariantNumeric: 'tabular-nums' }}>{item.counted}</p>
-                      </div>
+              <div className="space-y-4">
+                {(Object.entries(
+                  inventory.filter(i => getStatus(i) !== 'pending').reduce((acc, item) => {
+                    const key = mode === 'brands' ? item.brand : item.category;
+                    if (!acc[key]) acc[key] = [];
+                    acc[key].push(item);
+                    return acc;
+                  }, {} as Record<string, typeof inventory>)
+                ) as [string, typeof inventory][]).map(([groupName, items]) => (
+                  <div key={groupName} className="mb-2">
+                    <h4 className="text-[12px] font-bold text-[#627085] uppercase tracking-wider mb-2 px-1">{groupName}</h4>
+                    <div className="space-y-2.5">
+                      {items.map(item => (
+                        <div key={item.id} className="bg-white border border-[#e5e7eb] rounded-xl p-4 flex justify-between items-center shadow-sm">
+                          <div>
+                            <p className="text-[14px] font-bold text-[#000000]">
+                              {mode === 'vehicle' ? `${item.brand} ${item.model}` : item.model || 'Tyre'}
+                            </p>
+                            <p className="text-[12px] font-medium text-[#627085]">{item.size}</p>
+                          </div>
+                          <div className="text-right">
+                            <p className="text-[14px] font-bold text-[#000000]" style={{ fontVariantNumeric: 'tabular-nums' }}>{item.counted}</p>
+                          </div>
+                        </div>
+                      ))}
                     </div>
-                  );
-                })}
+                  </div>
+                ))}
                 {inventory.filter(i => getStatus(i) !== 'pending').length === 0 && (
                   <div className="text-center py-10 border border-dashed border-[#e5e7eb] rounded-xl bg-white">
                     <p className="text-[#627085] text-[13px] font-medium">No items counted yet.</p>
@@ -1379,7 +1472,33 @@ function StockTickScreen({ onBack, onAddTyre, onFinish }: { onBack: () => void, 
                     <h3 className="text-[20px] font-bold text-[#000000] mb-1">Audit Submitted</h3>
                     <p className="text-[14px] text-[#627085] mb-6">Your stock take has been saved successfully.</p>
                     <button 
-                      onClick={() => { setShowSuccess(false); setIsSummaryOpen(false); onFinish(); }}
+                      onClick={() => {
+                        const totalAudited = inventory.filter(i => getStatus(i) !== 'pending');
+                        const matched = totalAudited.filter(i => getStatus(i) === 'matched').length;
+                        const discrepancies = totalAudited.filter(i => getStatus(i) === 'discrepancy').length;
+                        
+                        const newId = `AUD-${1041 + historyData.length}`;
+                        const newEntry = {
+                          id: newId,
+                          month: 'Mar',
+                          day: '23',
+                          time: '10:30 AM',
+                          group: 'today',
+                          label: mode === 'brands' ? 'Brand Count' : 'Vehicle Count',
+                          items: totalAudited.length,
+                          matched: matched,
+                          discrepancies: discrepancies,
+                          status: discrepancies > 0 ? 'review' : 'approved',
+                          manager: 'Dravid S.',
+                          duration: '45 min',
+                          location: 'Main Warehouse'
+                        };
+                        setHistoryData(prev => [newEntry, ...prev]);
+                        
+                        setShowSuccess(false); 
+                        setIsSummaryOpen(false); 
+                        onFinish(); 
+                      }}
                       className="w-full py-3.5 bg-[#000000] text-white rounded-xl font-bold text-[14px] active:scale-[0.98] transition-transform"
                     >
                       Done
@@ -1423,38 +1542,66 @@ function StockTickScreen({ onBack, onAddTyre, onFinish }: { onBack: () => void, 
                 <div className="flex-1 overflow-y-auto px-6 py-5 [&::-webkit-scrollbar]:hidden" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
                   {/* Dropdowns */}
                   <div className="flex flex-col gap-3 mb-5">
-                    <div className="relative">
-                      <select id="sheet-brand" className="w-full appearance-none bg-[#f3f4f6] hover:bg-[#e5e7eb]/80 border-0 rounded-2xl px-5 py-4 text-[14px] font-extrabold text-[#111827] focus:outline-none focus:ring-2 focus:ring-[#ef4444]/20 transition-all">
-                        <option value="" disabled selected>Select Brand</option>
-                        <option value="MRF">MRF</option>
-                        <option value="CEAT">CEAT</option>
-                        <option value="Apollo">Apollo</option>
-                        <option value="Michelin">Michelin</option>
-                        <option value="Bridgestone">Bridgestone</option>
-                        <option value="JK Tyre">JK Tyre</option>
-                      </select>
-                      <ChevronRight className="absolute right-5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#111827] rotate-90 pointer-events-none" />
-                    </div>
-                    <div className="relative">
-                      <select id="sheet-size" className="w-full appearance-none bg-[#f3f4f6] hover:bg-[#e5e7eb]/80 border-0 rounded-2xl px-5 py-4 text-[14px] font-extrabold text-[#111827] focus:outline-none focus:ring-2 focus:ring-[#ef4444]/20 transition-all">
-                        <option value="" disabled selected>Select Size</option>
-                        <option value="155/80/R13">155/80/R13</option>
-                        <option value="165/70/R14">165/70/R14</option>
-                        <option value="165/80/R14">165/80/R14</option>
-                        <option value="185/65/R15">185/65/R15</option>
-                        <option value="205/55/R16">205/55/R16</option>
-                      </select>
-                      <ChevronRight className="absolute right-5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#111827] rotate-90 pointer-events-none" />
-                    </div>
-                    {mode === 'vehicle' && (
-                      <div className="relative">
-                        <select className="w-full appearance-none bg-[#f3f4f6] hover:bg-[#e5e7eb]/80 border-0 rounded-2xl px-5 py-4 text-[14px] font-extrabold text-[#111827] focus:outline-none focus:ring-2 focus:ring-[#ef4444]/20 transition-all">
-                          <option value="" disabled selected>Select Vehicle Type</option>
-                          <option value="Four Wheeler">Four Wheeler</option>
-                          <option value="Two Wheeler">Two Wheeler</option>
-                        </select>
-                        <ChevronRight className="absolute right-5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#111827] rotate-90 pointer-events-none" />
-                      </div>
+                    {mode === 'vehicle' ? (
+                      <>
+                        <div className="relative">
+                          <select id="sheet-category" className="w-full appearance-none bg-[#f3f4f6] hover:bg-[#e5e7eb]/80 border-0 rounded-2xl px-5 py-4 text-[14px] font-extrabold text-[#111827] focus:outline-none focus:ring-2 focus:ring-[#ef4444]/20 transition-all">
+                            <option value="" disabled selected>Select Vehicle Type</option>
+                            <option value="Four Wheeler">Four Wheeler</option>
+                            <option value="Two Wheeler">Two Wheeler</option>
+                          </select>
+                          <ChevronRight className="absolute right-5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#111827] rotate-90 pointer-events-none" />
+                        </div>
+                        <div className="relative">
+                          <select id="sheet-brand" className="w-full appearance-none bg-[#f3f4f6] hover:bg-[#e5e7eb]/80 border-0 rounded-2xl px-5 py-4 text-[14px] font-extrabold text-[#111827] focus:outline-none focus:ring-2 focus:ring-[#ef4444]/20 transition-all">
+                            <option value="" disabled selected>Select Brand</option>
+                            <option value="MRF">MRF</option>
+                            <option value="CEAT">CEAT</option>
+                            <option value="Apollo">Apollo</option>
+                            <option value="Michelin">Michelin</option>
+                            <option value="Bridgestone">Bridgestone</option>
+                            <option value="JK Tyre">JK Tyre</option>
+                          </select>
+                          <ChevronRight className="absolute right-5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#111827] rotate-90 pointer-events-none" />
+                        </div>
+                        <div className="relative">
+                          <select id="sheet-size" className="w-full appearance-none bg-[#f3f4f6] hover:bg-[#e5e7eb]/80 border-0 rounded-2xl px-5 py-4 text-[14px] font-extrabold text-[#111827] focus:outline-none focus:ring-2 focus:ring-[#ef4444]/20 transition-all">
+                            <option value="" disabled selected>Select Size</option>
+                            <option value="155/80/R13">155/80/R13</option>
+                            <option value="165/70/R14">165/70/R14</option>
+                            <option value="165/80/R14">165/80/R14</option>
+                            <option value="185/65/R15">185/65/R15</option>
+                            <option value="205/55/R16">205/55/R16</option>
+                          </select>
+                          <ChevronRight className="absolute right-5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#111827] rotate-90 pointer-events-none" />
+                        </div>
+                      </>
+                    ) : (
+                      <>
+                        <div className="relative">
+                          <select id="sheet-brand" className="w-full appearance-none bg-[#f3f4f6] hover:bg-[#e5e7eb]/80 border-0 rounded-2xl px-5 py-4 text-[14px] font-extrabold text-[#111827] focus:outline-none focus:ring-2 focus:ring-[#ef4444]/20 transition-all">
+                            <option value="" disabled selected>Select Brand</option>
+                            <option value="MRF">MRF</option>
+                            <option value="CEAT">CEAT</option>
+                            <option value="Apollo">Apollo</option>
+                            <option value="Michelin">Michelin</option>
+                            <option value="Bridgestone">Bridgestone</option>
+                            <option value="JK Tyre">JK Tyre</option>
+                          </select>
+                          <ChevronRight className="absolute right-5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#111827] rotate-90 pointer-events-none" />
+                        </div>
+                        <div className="relative">
+                          <select id="sheet-size" className="w-full appearance-none bg-[#f3f4f6] hover:bg-[#e5e7eb]/80 border-0 rounded-2xl px-5 py-4 text-[14px] font-extrabold text-[#111827] focus:outline-none focus:ring-2 focus:ring-[#ef4444]/20 transition-all">
+                            <option value="" disabled selected>Select Size</option>
+                            <option value="155/80/R13">155/80/R13</option>
+                            <option value="165/70/R14">165/70/R14</option>
+                            <option value="165/80/R14">165/80/R14</option>
+                            <option value="185/65/R15">185/65/R15</option>
+                            <option value="205/55/R16">205/55/R16</option>
+                          </select>
+                          <ChevronRight className="absolute right-5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#111827] rotate-90 pointer-events-none" />
+                        </div>
+                      </>
                     )}
                   </div>
 
@@ -1530,8 +1677,10 @@ function StockTickScreen({ onBack, onAddTyre, onFinish }: { onBack: () => void, 
                     onClick={() => {
                       const brandEl = document.getElementById('sheet-brand') as HTMLSelectElement;
                       const sizeEl = document.getElementById('sheet-size') as HTMLSelectElement;
+                      const categoryEl = document.getElementById('sheet-category') as HTMLSelectElement;
                       const brand = brandEl?.value || '';
                       const size = sizeEl?.value || '';
+                      const category = categoryEl?.value || 'Four Wheeler';
                       if (brand && size) {
                         setInventory(prev => [...prev, {
                           id: Date.now(),
@@ -1540,7 +1689,7 @@ function StockTickScreen({ onBack, onAddTyre, onFinish }: { onBack: () => void, 
                           size,
                           expected: 0,
                           counted: null,
-                          category: 'Four Wheeler'
+                          category
                         }]);
                         setIsAddTyreOpen(false);
                       }
@@ -1834,20 +1983,9 @@ function FullItemListScreen({ audit, onBack, onReAudit }: { audit: any, onBack: 
   );
 }
 
-function HistoryScreen({ onBack, onReAudit }: { onBack: () => void, onReAudit: () => void }) {
+function HistoryScreen({ onBack, onReAudit, historyData }: { onBack: () => void, onReAudit: () => void, historyData: any[] }) {
   const [selectedAudit, setSelectedAudit] = useState<any | null>(null);
   const [viewingFullList, setViewingFullList] = useState(false);
-
-  const historyData = [
-    { id: 'AUD-1048', month: 'Mar', day: '23', time: '10:30 AM', group: 'today', label: 'Morning Audit', items: 10, matched: 8, discrepancies: 2, status: 'review', manager: 'Dravid S.', duration: '45 min', location: 'Main Warehouse' },
-    { id: 'AUD-1047', month: 'Mar', day: '22', time: '10:15 AM', group: 'yesterday', label: 'Daily Count', items: 10, matched: 10, discrepancies: 0, status: 'approved', manager: 'Dravid S.', duration: '40 min', location: 'Main Warehouse' },
-    { id: 'AUD-1046', month: 'Mar', day: '21', time: '11:00 AM', group: 'thisWeek', label: 'Daily Count', items: 10, matched: 9, discrepancies: 1, status: 'approved', manager: 'Mike T.', duration: '38 min', location: 'Main Warehouse' },
-    { id: 'AUD-1045', month: 'Mar', day: '20', time: '09:45 AM', group: 'thisWeek', label: 'Daily Count', items: 10, matched: 10, discrepancies: 0, status: 'approved', manager: 'Dravid S.', duration: '42 min', location: 'Main Warehouse' },
-    { id: 'AUD-1044', month: 'Mar', day: '19', time: '10:00 AM', group: 'thisWeek', label: 'Daily Count', items: 10, matched: 8, discrepancies: 2, status: 'approved', manager: 'Sarah J.', duration: '50 min', location: 'Main Warehouse' },
-    { id: 'AUD-1043', month: 'Mar', day: '18', time: '10:30 AM', group: 'thisWeek', label: 'Daily Count', items: 10, matched: 10, discrepancies: 0, status: 'approved', manager: 'Dravid S.', duration: '35 min', location: 'Main Warehouse' },
-    { id: 'AUD-1042', month: 'Mar', day: '17', time: '09:30 AM', group: 'lastWeek', label: 'Daily Count', items: 10, matched: 10, discrepancies: 0, status: 'approved', manager: 'Mike T.', duration: '55 min', location: 'Main Warehouse' },
-    { id: 'AUD-1041', month: 'Mar', day: '16', time: '10:45 AM', group: 'lastWeek', label: 'Daily Count', items: 10, matched: 9, discrepancies: 1, status: 'approved', manager: 'Dravid S.', duration: '48 min', location: 'Back Storage' },
-  ];
 
   const todayAudits = historyData.filter(a => a.group === 'today');
   const yesterdayAudits = historyData.filter(a => a.group === 'yesterday');
@@ -1957,25 +2095,43 @@ function HistoryScreen({ onBack, onReAudit }: { onBack: () => void, onReAudit: (
                   </div>
                 </div>
 
-                {selectedAudit.discrepancies > 0 && (
+                {selectedAudit.label === 'Old Tyres Audit' ? (
                   <div className="mb-5">
-                    <h3 className="text-[14px] font-bold text-[#000000] mb-3">Variance Log</h3>
-                    <div className="bg-[#fef2f2] border border-[#fecaca] rounded-xl p-4">
-                      <div className="flex justify-between items-start mb-2">
-                        <span className="text-[14px] font-bold text-[#000000]">205/55 R16 Apollo</span>
-                        <span className="text-[11px] font-bold text-[#ef4444] bg-white border border-[#fecaca] px-2 py-0.5 rounded-full">-2 Missing</span>
+                    <h3 className="text-[14px] font-bold text-[#000000] mb-3">Old Tyres Counted</h3>
+                    <div className="bg-white border border-[#e5e7eb] rounded-xl overflow-hidden mb-5">
+                      <div className="flex justify-between items-center px-4 py-3 border-b border-[#f3f4f6]">
+                        <span className="text-[13px] text-[#627085]">Car Tyres</span>
+                        <span className="text-[13px] font-bold text-[#000000]">{selectedAudit.oldTyresCount?.car ?? 0}</span>
                       </div>
-                      <p className="text-[12px] text-[#627085]">System expected 45, found 43 during physical count.</p>
+                      <div className="flex justify-between items-center px-4 py-3">
+                        <span className="text-[13px] text-[#627085]">Bike Tyres</span>
+                        <span className="text-[13px] font-bold text-[#000000]">{selectedAudit.oldTyresCount?.bike ?? 0}</span>
+                      </div>
                     </div>
                   </div>
-                )}
+                ) : (
+                  <>
+                    {selectedAudit.discrepancies > 0 && (
+                      <div className="mb-5">
+                        <h3 className="text-[14px] font-bold text-[#000000] mb-3">Variance Log</h3>
+                        <div className="bg-[#fef2f2] border border-[#fecaca] rounded-xl p-4">
+                          <div className="flex justify-between items-start mb-2">
+                            <span className="text-[14px] font-bold text-[#000000]">205/55 R16 Apollo</span>
+                            <span className="text-[11px] font-bold text-[#ef4444] bg-white border border-[#fecaca] px-2 py-0.5 rounded-full">-2 Missing</span>
+                          </div>
+                          <p className="text-[12px] text-[#627085]">System expected 45, found 43 during physical count.</p>
+                        </div>
+                      </div>
+                    )}
 
-                <button 
-                  onClick={() => setViewingFullList(true)}
-                  className="w-full py-3.5 bg-[#000000] text-white rounded-xl font-bold text-[14px] mb-3 active:scale-[0.98] transition-transform"
-                >
-                  View All {selectedAudit.items} Items
-                </button>
+                    <button 
+                      onClick={() => setViewingFullList(true)}
+                      className="w-full py-3.5 bg-[#000000] text-white rounded-xl font-bold text-[14px] mb-3 active:scale-[0.98] transition-transform"
+                    >
+                      View All {selectedAudit.items} Items
+                    </button>
+                  </>
+                )}
                 <button 
                   onClick={() => setSelectedAudit(null)}
                   className="w-full py-3.5 bg-white text-[#000000] border border-[#e5e7eb] rounded-xl font-bold text-[14px] active:scale-[0.98] transition-transform"
