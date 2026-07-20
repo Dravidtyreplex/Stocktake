@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Tyreplex Brand Guidelines - Visual Identity Specification</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Inter:wght@400;600&display=swap');
+    
+    * {
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Poppins', sans-serif;
+      color: #121726;
+      margin: 0;
+      padding: 0;
+      background-color: #ffffff;
+      line-height: 1.6;
+      font-size: 14px;
+    }
+    
+    @page {
+      size: A4;
+      margin: 20mm;
+      @bottom-right {
+        content: counter(page);
+      }
+    }
+    
+    .page-break {
+      page-break-after: always;
+    }
+    
+    .cover-page {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 40px 0;
+      page-break-after: always;
+    }
+    
+    .header-logo {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2px solid #f1f5f9;
+      padding-bottom: 20px;
+      margin-bottom: 40px;
+    }
+    
+    .logo-container img {
+      height: 40px;
+      object-fit: contain;
+    }
+    
+    .doc-tag {
+      background-color: #ed1d24;
+      color: #ffffff;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: 9999px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    
+    .cover-title-group {
+      margin-top: 100px;
+    }
+    
+    .cover-title {
+      font-size: 42px;
+      font-weight: 800;
+      color: #121726;
+      line-height: 1.1;
+      margin: 0;
+    }
+    
+    .cover-subtitle {
+      font-size: 20px;
+      color: #627085;
+      font-weight: 400;
+      margin-top: 15px;
+      margin-bottom: 0;
+    }
+    
+    .cover-footer {
+      border-top: 2px solid #f1f5f9;
+      padding-top: 20px;
+      font-size: 12px;
+      color: #627085;
+      display: flex;
+      justify-content: space-between;
+    }
+    
+    h1 {
+      font-size: 24px;
+      font-weight: 700;
+      color: #121726;
+      border-bottom: 2px solid #ed1d24;
+      padding-bottom: 8px;
+      margin-top: 40px;
+      margin-bottom: 20px;
+      page-break-inside: avoid;
+    }
+    
+    h2 {
+      font-size: 18px;
+      font-weight: 600;
+      color: #121726;
+      margin-top: 30px;
+      margin-bottom: 15px;
+      page-break-inside: avoid;
+    }
+    
+    h3 {
+      font-size: 15px;
+      font-weight: 600;
+      color: #627085;
+      margin-top: 20px;
+      margin-bottom: 10px;
+      page-break-inside: avoid;
+    }
+    
+    p {
+      margin-top: 0;
+      margin-bottom: 15px;
+      text-align: justify;
+    }
+    
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 30px;
+      page-break-inside: avoid;
+    }
+    
+    th, td {
+      padding: 10px 12px;
+      text-align: left;
+      border-bottom: 1px solid #e5e8eb;
+      font-size: 13px;
+    }
+    
+    th {
+      background-color: #f7fafa;
+      color: #121726;
+      font-weight: 600;
+    }
+    
+    .color-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+      margin-bottom: 30px;
+      page-break-inside: avoid;
+    }
+    
+    .color-card {
+      border: 1px solid #e5e8eb;
+      border-radius: 8px;
+      padding: 12px;
+      display: flex;
+      align-items: center;
+      background-color: #f7fafa;
+    }
+    
+    .color-chip {
+      width: 50px;
+      height: 50px;
+      border-radius: 6px;
+      margin-right: 15px;
+      border: 1px solid rgba(0,0,0,0.05);
+      flex-shrink: 0;
+    }
+    
+    .color-info {
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .color-name {
+      font-weight: 600;
+      font-size: 14px;
+      color: #121726;
+    }
+    
+    .color-hex {
+      font-family: monospace;
+      font-size: 12px;
+      color: #627085;
+    }
+    
+    .color-role {
+      font-size: 11px;
+      color: #627085;
+      margin-top: 2px;
+    }
+    
+    .callout {
+      background-color: #fef2f2;
+      border-left: 4px solid #ed1d24;
+      padding: 15px;
+      border-radius: 0 8px 8px 0;
+      margin-bottom: 25px;
+      font-size: 13px;
+      page-break-inside: avoid;
+    }
+    
+    .callout-title {
+      font-weight: 600;
+      color: #121726;
+      margin-bottom: 5px;
+    }
+    
+    .callout-content {
+      color: #627085;
+    }
+    
+    .upload-box-visual {
+      border: 2px dashed #ed1d24;
+      border-radius: 12px;
+      background-color: #fcf2f2;
+      padding: 30px;
+      text-align: center;
+      margin-bottom: 25px;
+      page-break-inside: avoid;
+    }
+    
+    code {
+      font-family: monospace;
+      background-color: #e5e8eb;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 12px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Cover Page -->
+  <div class="cover-page">
+    <div class="header-logo">
+      <div class="logo-container">
+        <img src="https://cdn.tyreplex.com/themes/moonlight/images/TP-logo.png" alt="Tyreplex Logo" />
+      </div>
+      <div>
+        <span class="doc-tag">Brand Bible</span>
+      </div>
+    </div>
+    
+    <div class="cover-title-group">
+      <h1 class="cover-title">Tyreplex Brand Identity</h1>
+      <p class="cover-subtitle">Design System &amp; Brand Guidelines</p>
+    </div>
+    
+    <div class="cover-footer">
+      <div>
+        <strong>Created For:</strong> Dravid Tyreplex / Stocktake
+      </div>
+      <div>
+        <strong>Date:</strong> July 17, 2026
+      </div>
+      <div>
+        <strong>Version:</strong> v1.0
+      </div>
+    </div>
+  </div>
+
+  <!-- Content Pages -->
+  <div>
+    <h1>1. Brand Vision &amp; Purpose</h1>
+    <p>
+      Tyreplex is the technology platform driving modern tyre retail and B2B distributions. We believe in providing tyre dealers, store managers, and relationship managers with intuitive, highly visual digital tools that simplify stocktakes, pricing requests, and inventory audits.
+    </p>
+    
+    <div class="callout">
+      <div class="callout-title">Digitize &amp; Empower Tyre Retail</div>
+      <div class="callout-content">
+        We make tyre operations clean, transparent, and data-driven by replacing paper receipts and manual calculations with modern inventory, B2B bidding, and offline stock audits.
+      </div>
+    </div>
+
+    <h2>Core Voice Archetypes</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Archetype</th>
+          <th>Weight</th>
+          <th>Attributes</th>
+          <th>Meaning for Creative Expression</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>The Partner</strong></td>
+          <td>50%</td>
+          <td>Collaborative, Helpful, Localized</td>
+          <td>Relatable, supportive, down-to-earth. Speaks simply and clearly about daily operations.</td>
+        </tr>
+        <tr>
+          <td><strong>The Organizer</strong></td>
+          <td>30%</td>
+          <td>Systematic, Precise, Reliable</td>
+          <td>Clean, structured, detailed. Standardizes specifications (DOT, section widths) into simple layouts.</td>
+        </tr>
+        <tr>
+          <td><strong>The Innovator</strong></td>
+          <td>20%</td>
+          <td>Tech-forward, Proactive, Efficient</td>
+          <td>Pioneering and active. Introduces OCR invoice scanning and live quote countdowns to speed up operations.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="page-break"></div>
+
+    <h1>2. Color Palette &amp; Functional Swatches</h1>
+    <p>
+      Our colors represent action, success, and alerts. They are optimized for immediate recognition on mobile screens inside high-density warehouses and retail shops.
+    </p>
+
+    <h2>Primary Colors</h2>
+    <div class="color-grid">
+      <div class="color-card">
+        <div class="color-chip" style="background-color: #ed1d24;"></div>
+        <div class="color-info">
+          <span class="color-name">Tyreplex Red</span>
+          <span class="color-hex">#ED1D24</span>
+          <span class="color-role">Primary logo, primary buttons, shortage counts</span>
+        </div>
+      </div>
+      <div class="color-card">
+        <div class="color-chip" style="background-color: #121726;"></div>
+        <div class="color-info">
+          <span class="color-name">Tyreplex Dark</span>
+          <span class="color-hex">#121726</span>
+          <span class="color-role">Main header text, active tabs, dark selectors</span>
+        </div>
+      </div>
+    </div>
+
+    <h2>Functional &amp; Neutral Swatches</h2>
+    <div class="color-grid">
+      <div class="color-card">
+        <div class="color-chip" style="background-color: #00b633;"></div>
+        <div class="color-info">
+          <span class="color-name">Success Green</span>
+          <span class="color-hex">#00B633</span>
+          <span class="color-role">Verified stock counts, positive variance, payments</span>
+        </div>
+      </div>
+      <div class="color-card">
+        <div class="color-chip" style="background-color: #ff6b00;"></div>
+        <div class="color-info">
+          <span class="color-name">Bidding Orange</span>
+          <span class="color-hex">#FF6B00</span>
+          <span class="color-role">Live timers, alerts, warning counts, quantities</span>
+        </div>
+      </div>
+      <div class="color-card">
+        <div class="color-chip" style="background-color: #0066ff;"></div>
+        <div class="color-info">
+          <span class="color-name">Info Blue</span>
+          <span class="color-hex">#0066FF</span>
+          <span class="color-role">SKU categories, BNPL information panels</span>
+        </div>
+      </div>
+      <div class="color-card">
+        <div class="color-chip" style="background-color: #f7fafa;"></div>
+        <div class="color-info">
+          <span class="color-name">Frost Canvas Backdrop</span>
+          <span class="color-hex">#F7FAFA</span>
+          <span class="color-role">Backdrop behind cards, screen backgrounds</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-break"></div>
+
+    <h1>3. Typography &amp; Hierarchical Scale</h1>
+    <p>
+      Poppins is the primary brand font for Tyreplex. It is paired with Inter or SF Pro for technical statistics, specifications, timestamps, and numbers.
+    </p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Category</th>
+          <th>Font Family</th>
+          <th>Style &amp; Weight</th>
+          <th>Size (Pixels)</th>
+          <th>Examples</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Main Metrics</strong></td>
+          <td>Poppins</td>
+          <td>Bold</td>
+          <td>20px - 24px</td>
+          <td>Outstandings (e.g. ₹ 75,000), total items counts</td>
+        </tr>
+        <tr>
+          <td><strong>Page Headers</strong></td>
+          <td>Poppins</td>
+          <td>SemiBold / Bold</td>
+          <td>18px</td>
+          <td>"Stock Take", "Add Tyre", "Quote Details"</td>
+        </tr>
+        <tr>
+          <td><strong>Card Titles</strong></td>
+          <td>Poppins</td>
+          <td>SemiBold</td>
+          <td>14px - 15px</td>
+          <td>Brand names (e.g. CEAT, MRF), category selections</td>
+        </tr>
+        <tr>
+          <td><strong>Tyre Specifications</strong></td>
+          <td>Inter / SF Pro</td>
+          <td>Regular / Medium</td>
+          <td>11px - 13px</td>
+          <td>Tyre sizes (e.g. 165/70/R14), quantity inputs</td>
+        </tr>
+        <tr>
+          <td><strong>Status Badges</strong></td>
+          <td>Inter / SF Pro</td>
+          <td>SemiBold</td>
+          <td>8px - 10px</td>
+          <td>"Last audited: Yesterday", "Shortage"</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h1>4. Media &amp; Upload Specifications</h1>
+    
+    <h2>Tyre Product Photos</h2>
+    <p>
+      Tyre product photos must highlight tread patterns and sidewall markers clearly, shot against a solid white background with soft dropped shadows.
+    </p>
+
+    <h2>Image Upload Containers</h2>
+    <p>
+      The upload visual is styled with a dashed red border, a light pink background, and a camera icon placed inside a circular container.
+    </p>
+    <div class="upload-box-visual">
+      <span style="font-family: monospace; font-size: 13px; color: #ed1d24;">[Upload Tyre Image / Camera Container]</span>
+    </div>
+  </div>
+
+</body>
+</html>

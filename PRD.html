@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Tyre DMS &amp; Inventory Ecosystem - Product Requirements Document</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Inter:wght@400;600&display=swap');
+    
+    * {
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Poppins', sans-serif;
+      color: #1e293b;
+      margin: 0;
+      padding: 0;
+      background-color: #ffffff;
+      line-height: 1.6;
+      font-size: 14px;
+    }
+    
+    @page {
+      size: A4;
+      margin: 20mm;
+      @bottom-right {
+        content: counter(page);
+      }
+    }
+    
+    .page-break {
+      page-break-after: always;
+    }
+    
+    .cover-page {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 40px 0;
+      page-break-after: always;
+    }
+    
+    .header-logo {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2px solid #f1f5f9;
+      padding-bottom: 20px;
+      margin-bottom: 40px;
+    }
+    
+    .logo-container img {
+      height: 45px;
+      object-fit: contain;
+    }
+    
+    .doc-tag {
+      background-color: #ef4444;
+      color: #ffffff;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: 9999px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    
+    .cover-title-group {
+      margin-top: 100px;
+    }
+    
+    .cover-title {
+      font-size: 38px;
+      font-weight: 800;
+      color: #0f172a;
+      line-height: 1.1;
+      margin: 0;
+    }
+    
+    .cover-subtitle {
+      font-size: 18px;
+      color: #64748b;
+      font-weight: 400;
+      margin-top: 15px;
+      margin-bottom: 0;
+    }
+    
+    .cover-footer {
+      border-top: 2px solid #f1f5f9;
+      padding-top: 20px;
+      font-size: 12px;
+      color: #64748b;
+      display: flex;
+      justify-content: space-between;
+    }
+    
+    h1 {
+      font-size: 22px;
+      font-weight: 700;
+      color: #0f172a;
+      border-bottom: 2px solid #ef4444;
+      padding-bottom: 8px;
+      margin-top: 40px;
+      margin-bottom: 20px;
+      page-break-inside: avoid;
+    }
+    
+    h2 {
+      font-size: 16px;
+      font-weight: 600;
+      color: #1e293b;
+      margin-top: 30px;
+      margin-bottom: 15px;
+      page-break-inside: avoid;
+    }
+    
+    h3 {
+      font-size: 14px;
+      font-weight: 600;
+      color: #334155;
+      margin-top: 20px;
+      margin-bottom: 10px;
+      page-break-inside: avoid;
+    }
+    
+    p {
+      margin-top: 0;
+      margin-bottom: 15px;
+      text-align: justify;
+    }
+    
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 30px;
+      page-break-inside: avoid;
+    }
+    
+    th, td {
+      padding: 10px 12px;
+      text-align: left;
+      border-bottom: 1px solid #e2e8f0;
+      font-size: 13px;
+    }
+    
+    th {
+      background-color: #f8fafc;
+      color: #334155;
+      font-weight: 600;
+    }
+    
+    .callout {
+      background-color: #f8fafc;
+      border-left: 4px solid #0066ff;
+      padding: 15px;
+      border-radius: 0 8px 8px 0;
+      margin-bottom: 25px;
+      font-size: 13px;
+      page-break-inside: avoid;
+    }
+    
+    .callout-title {
+      font-weight: 600;
+      color: #0f172a;
+      margin-bottom: 5px;
+    }
+    
+    .callout-content {
+      color: #334155;
+    }
+    
+    .diagram-box {
+      border: 1px dashed #cbd5e1;
+      border-radius: 12px;
+      background-color: #f8fafc;
+      padding: 20px;
+      margin-bottom: 30px;
+      text-align: center;
+      page-break-inside: avoid;
+    }
+    
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+      margin-bottom: 25px;
+      page-break-inside: avoid;
+    }
+    
+    .grid-card {
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      padding: 15px;
+      background-color: #ffffff;
+    }
+    
+    .grid-card h4 {
+      margin: 0 0 8px 0;
+      color: #0f172a;
+      font-size: 14px;
+      font-weight: 600;
+    }
+    
+    .grid-card p {
+      margin: 0;
+      font-size: 12px;
+      color: #64748b;
+    }
+    
+    code {
+      font-family: monospace;
+      background-color: #f1f5f9;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 12px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Cover Page -->
+  <div class="cover-page">
+    <div class="header-logo">
+      <div class="logo-container">
+        <img src="https://cdn.tyreplex.com/themes/moonlight/images/TP-logo.png" alt="Tyreplex Logo" />
+      </div>
+      <div>
+        <span class="doc-tag">Product Requirements (PRD)</span>
+      </div>
+    </div>
+    
+    <div class="cover-title-group">
+      <h1 class="cover-title">Tyre DMS &amp; Inventory Ecosystem</h1>
+      <p class="cover-subtitle">Mobile App Product Requirements Document &amp; UX Specification</p>
+    </div>
+    
+    <div class="cover-footer">
+      <div>
+        <strong>Prepared For:</strong> Dravid Tyreplex / Stocktake
+      </div>
+      <div>
+        <strong>Date:</strong> July 17, 2026
+      </div>
+      <div>
+        <strong>Status:</strong> Final Draft
+      </div>
+    </div>
+  </div>
+
+  <!-- Document Sections -->
+  <div>
+    <h1>1. Executive Summary</h1>
+    <p>
+      Tyre retail and B2B distribution operations carry specialized complexities compared to general inventory retail. Products are physically heavy, take up substantial storage space, and feature highly specific, safety-critical parameters. Furthermore, dealers maintain low on-hand stock and rely heavily on quick-turnaround local distributor delivery when customized vehicle requests arrive.
+    </p>
+    <p>
+      This Product Requirements Document (PRD) describes an integrated, mobile-first ecosystem consolidating inventory tracking, automated par reorders, real-time B2B quotes, and discrepancy audits.
+    </p>
+
+    <h1>2. Specialized Tyre Taxonomy (Core Data Model)</h1>
+    <p>
+      Standard retail schemas fail to capture tyre specifications. All cataloging and search modules must support the following structure:
+    </p>
+    
+    <table>
+      <thead>
+        <tr>
+          <th>Attribute</th>
+          <th>Type / Format</th>
+          <th>Description</th>
+          <th>Example</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Brand</strong></td>
+          <td>Enum / String</td>
+          <td>Tyre manufacturer</td>
+          <td><code>Apollo</code>, <code>CEAT</code>, <code>MRF</code></td>
+        </tr>
+        <tr>
+          <td><strong>Pattern / Model</strong></td>
+          <td>String</td>
+          <td>Tread pattern and branding identifier</td>
+          <td><code>Milaze X3</code>, <code>SecuraDrive</code></td>
+        </tr>
+        <tr>
+          <td><strong>Section Width</strong></td>
+          <td>Integer (mm)</td>
+          <td>Tread width from sidewall to sidewall</td>
+          <td><code>165</code>, <code>205</code>, <code>185</code></td>
+        </tr>
+        <tr>
+          <td><strong>Aspect Ratio</strong></td>
+          <td>Integer (%)</td>
+          <td>Sidewall height relative to tread width</td>
+          <td><code>70</code>, <code>60</code>, <code>65</code></td>
+        </tr>
+        <tr>
+          <td><strong>Rim Diameter</strong></td>
+          <td>Integer (Inches)</td>
+          <td>Wheel diameter size fit</td>
+          <td><code>14</code>, <code>16</code>, <code>15</code></td>
+        </tr>
+        <tr>
+          <td><strong>Vehicle Category</strong></td>
+          <td>Enum</td>
+          <td>Segment fitment</td>
+          <td><code>Four Wheeler</code>, <code>Two Wheeler</code></td>
+        </tr>
+        <tr>
+          <td><strong>Condition</strong></td>
+          <td>Enum</td>
+          <td>Tyre condition status</td>
+          <td><code>New</code>, <code>Used</code>, <code>Retread</code></td>
+        </tr>
+        <tr>
+          <td><strong>DOT Code</strong></td>
+          <td>String (WWYY)</td>
+          <td>Manufacturing week and year</td>
+          <td><code>1224</code> (12th week of 2024)</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="page-break"></div>
+
+    <h1>3. B2B Quote Bidding Marketplace</h1>
+    <p>
+      To resolve dealer shortages, the app features an active RFQ (Request for Quote) marketplace allowing local suppliers to bid directly on order requests.
+    </p>
+    
+    <div class="diagram-box">
+      <strong style="display:block; margin-bottom:15px; color:#0f172a; font-size:14px;">B2B Bidding Flow Sequence</strong>
+      <div style="font-family:monospace; font-size:12px; color:#475569; text-align:left; max-width:400px; margin:0 auto;">
+        1. Dealer -> Submits RFQ (Size, Qty, Timelimit)<br>
+        2. System -> Broadcasts to local Suppliers<br>
+        3. Suppliers -> Submit Price &amp; Time Bids<br>
+        4. System -> Calculates Dealer Profit Margins<br>
+        5. Dealer -> Accepts Bid via BNPL/Credit limit<br>
+        6. System -> Generates Purchase Order (PO)
+      </div>
+    </div>
+
+    <h3>Core Features:</h3>
+    <div class="grid-2">
+      <div class="grid-card">
+        <h4>1. Live Timers</h4>
+        <p>Quotes remain active for limited durations (e.g. 3h 49m) to drive immediate supplier actions and secure order placement.</p>
+      </div>
+      <div class="grid-card">
+        <h4>2. Profit Margin Estimator</h4>
+        <p>Automatically calculates potential profit margin based on landed costs vs. suggested retail prices before bid confirmation.</p>
+      </div>
+      <div class="grid-card">
+        <h4>3. BNPL Split Payments</h4>
+        <p>Seamlessly splits transactions between cash, credit limits, and credit note (CN) deductions.</p>
+      </div>
+      <div class="grid-card">
+        <h4>4. Supplier Notifications</h4>
+        <p>Instant SMS/Push notifications alert suppliers to submit competing bids for regional stock requests.</p>
+      </div>
+    </div>
+
+    <h1>4. Specialized Inventory Intake</h1>
+    <ul>
+      <li><strong>OCR Invoice Scans:</strong> Snap invoice photos to automatically parse SKU details, buying rates, and quantities directly into stock lists.</li>
+      <li><strong>Multi-Branch Sync:</strong> Query sister store warehouses for sizes prior to submitting supplier quote requests.</li>
+      <li><strong>Auto-Reorder Triggers:</strong> Par level trackers automatically create draft POs once core hatchback or two-wheeler tyre quantities fall below the threshold.</li>
+    </ul>
+
+    <div class="page-break"></div>
+
+    <h1>5. Mobile-First Stocktake reconciliation</h1>
+    <p>
+      Designed to address challenging warehouse environments with weak network connectivity and low-light parameters.
+    </p>
+    
+    <div class="callout">
+      <div class="callout-title">📋 Audit Process Rules</div>
+      <div class="callout-content">
+        1. <strong>Double Audit Method:</strong> Camera scanner counts combined with large tactile increment buttons (+/-) for manual entries.<br>
+        2. <strong>Visual Delta Signals:</strong> Shortages are colored in Brand Red (<code>#ED1D24</code>); matches are shown in Success Green (<code>#00B633</code>).<br>
+        3. <strong>Offline Cache Queue:</strong> Stock counts are saved locally and synchronized automatically when Wi-Fi becomes available.<br>
+        4. <strong>Manager Verification:</strong> Variances exceeding 2 items or values of ₹10,000 require manager approval and a secondary verification count.
+      </div>
+    </div>
+
+    <h1>6. Design System &amp; UI Guidelines</h1>
+    <p>
+      Interfaces must follow a clean, accessible layout:
+    </p>
+    <ul>
+      <li><strong>Colors:</strong> Primary Brand Red (<code>#ED1D24</code>) for highlights and primary CTAs, Success Green (<code>#00B633</code>) for verified counts, and Slate Gray (<code>#627085</code>) for details.</li>
+      <li><strong>Typography:</strong> <code>Poppins</code> for UI, buttons, and titles; <code>Inter</code>/<code>SF Pro</code> for technical text, section dimensions, and timestamps.</li>
+      <li><strong>Dimensions:</strong> 16px layouts on mobile margins, with corner radii values of 4px for badges, 12px for buttons, and 24px for top sheet corners.</li>
+    </ul>
+  </div>
+
+</body>
+</html>

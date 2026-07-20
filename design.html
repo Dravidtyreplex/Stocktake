@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>DMS App Ecosystem Design System & Architecture Specification</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Inter:wght@400;600&display=swap');
+    
+    * {
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Poppins', sans-serif;
+      color: #1e293b;
+      margin: 0;
+      padding: 0;
+      background-color: #ffffff;
+      line-height: 1.6;
+      font-size: 14px;
+    }
+    
+    /* Page settings for printing */
+    @page {
+      size: A4;
+      margin: 20mm;
+      @bottom-right {
+        content: counter(page);
+      }
+    }
+    
+    .page-break {
+      page-break-after: always;
+    }
+    
+    .cover-page {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 40px 0;
+      page-break-after: always;
+    }
+    
+    .header-logo {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2px solid #f1f5f9;
+      padding-bottom: 20px;
+      margin-bottom: 40px;
+    }
+    
+    .logo-container img {
+      height: 45px;
+      object-fit: contain;
+    }
+    
+    .doc-tag {
+      background-color: #ef4444;
+      color: #ffffff;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: 9999px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    
+    .cover-title-group {
+      margin-top: 100px;
+    }
+    
+    .cover-title {
+      font-size: 42px;
+      font-weight: 800;
+      color: #0f172a;
+      line-height: 1.1;
+      margin: 0;
+    }
+    
+    .cover-subtitle {
+      font-size: 20px;
+      color: #64748b;
+      font-weight: 400;
+      margin-top: 15px;
+      margin-bottom: 0;
+    }
+    
+    .cover-footer {
+      border-top: 2px solid #f1f5f9;
+      padding-top: 20px;
+      font-size: 12px;
+      color: #64748b;
+      display: flex;
+      justify-content: space-between;
+    }
+    
+    h1 {
+      font-size: 24px;
+      font-weight: 700;
+      color: #0f172a;
+      border-bottom: 2px solid #ef4444;
+      padding-bottom: 8px;
+      margin-top: 40px;
+      margin-bottom: 20px;
+      page-break-inside: avoid;
+    }
+    
+    h2 {
+      font-size: 18px;
+      font-weight: 600;
+      color: #1e293b;
+      margin-top: 30px;
+      margin-bottom: 15px;
+      page-break-inside: avoid;
+    }
+    
+    h3 {
+      font-size: 15px;
+      font-weight: 600;
+      color: #334155;
+      margin-top: 20px;
+      margin-bottom: 10px;
+      page-break-inside: avoid;
+    }
+    
+    p {
+      margin-top: 0;
+      margin-bottom: 15px;
+      text-align: justify;
+    }
+    
+    /* Table styling */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 30px;
+      page-break-inside: avoid;
+    }
+    
+    th, td {
+      padding: 10px 12px;
+      text-align: left;
+      border-bottom: 1px solid #e2e8f0;
+      font-size: 13px;
+    }
+    
+    th {
+      background-color: #f8fafc;
+      color: #334155;
+      font-weight: 600;
+    }
+    
+    /* Color Chip container */
+    .color-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+      margin-bottom: 30px;
+      page-break-inside: avoid;
+    }
+    
+    .color-card {
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 12px;
+      display: flex;
+      align-items: center;
+      background-color: #f8fafc;
+    }
+    
+    .color-chip {
+      width: 50px;
+      height: 50px;
+      border-radius: 6px;
+      margin-right: 15px;
+      border: 1px solid rgba(0,0,0,0.05);
+      flex-shrink: 0;
+    }
+    
+    .color-info {
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .color-name {
+      font-weight: 600;
+      font-size: 14px;
+      color: #0f172a;
+    }
+    
+    .color-hex {
+      font-family: monospace;
+      font-size: 12px;
+      color: #64748b;
+    }
+    
+    .color-role {
+      font-size: 11px;
+      color: #475569;
+      margin-top: 2px;
+    }
+    
+    /* Alert / Callout box */
+    .callout {
+      background-color: #fef2f2;
+      border-left: 4px solid #ef4444;
+      padding: 15px;
+      border-radius: 0 8px 8px 0;
+      margin-bottom: 25px;
+      font-size: 13px;
+      page-break-inside: avoid;
+    }
+    
+    .callout-title {
+      font-weight: 600;
+      color: #991b1b;
+      margin-bottom: 5px;
+    }
+    
+    .callout-content {
+      color: #7f1d1d;
+    }
+    
+    /* Page list styling */
+    .page-list-item {
+      border-left: 2px solid #e2e8f0;
+      padding-left: 15px;
+      margin-bottom: 25px;
+      page-break-inside: avoid;
+    }
+    
+    .page-title-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 5px;
+    }
+    
+    .page-title {
+      font-weight: 600;
+      font-size: 16px;
+      color: #0f172a;
+      margin: 0;
+    }
+    
+    .page-meta {
+      font-size: 12px;
+      color: #64748b;
+    }
+    
+    /* Code styling */
+    code {
+      font-family: monospace;
+      background-color: #f1f5f9;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 12px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Cover Page -->
+  <div class="cover-page">
+    <div class="header-logo">
+      <div class="logo-container">
+        <img src="https://cdn.tyreplex.com/themes/moonlight/images/TP-logo.png" alt="Tyreplex Logo" />
+      </div>
+      <div>
+        <span class="doc-tag">Design Specification</span>
+      </div>
+    </div>
+    
+    <div class="cover-title-group">
+      <h1 class="cover-title">DMS App Ecosystem</h1>
+      <p class="cover-subtitle">Design System &amp; Architecture Specification</p>
+    </div>
+    
+    <div class="cover-footer">
+      <div>
+        <strong>Prepared For:</strong> Dravid Tyreplex / Stocktake
+      </div>
+      <div>
+        <strong>Date:</strong> July 17, 2026
+      </div>
+      <div>
+        <strong>Version:</strong> v1.0.0
+      </div>
+    </div>
+  </div>
+
+  <!-- Table of Contents Placeholder for visual structure -->
+  
+  <!-- Content Pages -->
+  <div>
+    <h1>1. Color Palette &amp; Design Tokens</h1>
+    <p>
+      The DMS ecosystem uses a cohesive, high-contrast palette. Bright functional colors highlight key statuses, stock numbers, and transaction values, while cool page backdrops ensure readability on mobile screen sizes.
+    </p>
+    
+    <h2>Primary &amp; Brand Accent Colors</h2>
+    <div class="color-grid">
+      <div class="color-card">
+        <div class="color-chip" style="background-color: #ED1D24;"></div>
+        <div class="color-info">
+          <span class="color-name">Brand Red</span>
+          <span class="color-hex">#ED1D24</span>
+          <span class="color-role">Primary actions, error states, and shortages</span>
+        </div>
+      </div>
+      <div class="color-card">
+        <div class="color-chip" style="background-color: #00B633;"></div>
+        <div class="color-info">
+          <span class="color-name">Success Green</span>
+          <span class="color-hex">#00B633</span>
+          <span class="color-role">Confirmation, clear status, positive variance</span>
+        </div>
+      </div>
+      <div class="color-card">
+        <div class="color-chip" style="background-color: #FF6B00;"></div>
+        <div class="color-info">
+          <span class="color-name">Bidding Orange</span>
+          <span class="color-hex">#FF6B00</span>
+          <span class="color-role">Warning alerts, live counters, quantities</span>
+        </div>
+      </div>
+      <div class="color-card">
+        <div class="color-chip" style="background-color: #0066FF;"></div>
+        <div class="color-info">
+          <span class="color-name">Primary Blue</span>
+          <span class="color-hex">#0066FF</span>
+          <span class="color-role">Information states, SKUs, links</span>
+        </div>
+      </div>
+      <div class="color-card">
+        <div class="color-chip" style="background-color: #7A4DFF;"></div>
+        <div class="color-info">
+          <span class="color-name">Loyalty Purple</span>
+          <span class="color-hex">#7A4DFF</span>
+          <span class="color-role">Loyalty metrics, brand cards</span>
+        </div>
+      </div>
+      <div class="color-card">
+        <div class="color-chip" style="background-color: #121726;"></div>
+        <div class="color-info">
+          <span class="color-name">Dark Navy Selection</span>
+          <span class="color-hex">#121726</span>
+          <span class="color-role">Active control selectors, dark text headers</span>
+        </div>
+      </div>
+    </div>
+    
+    <h2>Theme Variables (Bottom Navigation)</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Variable Token Name</th>
+          <th>Light Mode Value</th>
+          <th>Dark Mode Value</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>Background/Main-bg</code></td>
+          <td>#FFFFFF</td>
+          <td>#272A32</td>
+          <td>Canvas and bottom navigation bar panels</td>
+        </tr>
+        <tr>
+          <td><code>Label &amp; Icon Default</code></td>
+          <td>#5E5F60</td>
+          <td>#9E9E9E</td>
+          <td>Default color for unselected navigation options</td>
+        </tr>
+        <tr>
+          <td><code>Label &amp; Icon Active</code></td>
+          <td>#00AA5B</td>
+          <td>#00AA5B</td>
+          <td>Vibrant green accent indicating active selection</td>
+        </tr>
+      </tbody>
+    </table>
+    
+    <div class="page-break"></div>
+    
+    <h1>2. Typography &amp; Hierarchical Scale</h1>
+    <p>
+      The interface standardizes on the <strong>Poppins</strong> typeface for geometric precision and clarity across mobile screens. System symbols and localization strings use <strong>Inter</strong> or <strong>SF Pro</strong> respectively.
+    </p>
+    
+    <table>
+      <thead>
+        <tr>
+          <th>Role</th>
+          <th>Font Family</th>
+          <th>Weight &amp; Style</th>
+          <th>Size (Pixels)</th>
+          <th>Context &amp; Examples</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Large Numeric Metrics</strong></td>
+          <td>Poppins</td>
+          <td>Bold</td>
+          <td>20px - 24px</td>
+          <td>Financial outstanding balances, large statistics (e.g. 97.5% Accuracy)</td>
+        </tr>
+        <tr>
+          <td><strong>Section Headers</strong></td>
+          <td>Poppins</td>
+          <td>SemiBold</td>
+          <td>16px - 18px</td>
+          <td>Screen title headers (e.g. Stock Take, More Actions)</td>
+        </tr>
+        <tr>
+          <td><strong>Card Titles &amp; Products</strong></td>
+          <td>Poppins</td>
+          <td>Bold / SemiBold</td>
+          <td>14px - 15px</td>
+          <td>Tyre product brand names, selection action cards (e.g. By Brands)</td>
+        </tr>
+        <tr>
+          <td><strong>Card Values &amp; Inputs</strong></td>
+          <td>Poppins</td>
+          <td>Medium / Regular</td>
+          <td>11px - 13px</td>
+          <td>Quantity input values, stepper controls, form field helper labels</td>
+        </tr>
+        <tr>
+          <td><strong>Timestamps &amp; Alerts</strong></td>
+          <td>Poppins</td>
+          <td>Medium</td>
+          <td>8px - 10px</td>
+          <td>Audit intervals (e.g. Last audited: Yesterday), category items count</td>
+        </tr>
+      </tbody>
+    </table>
+    
+    <h1>3. Layout &amp; Spatial Radii</h1>
+    <p>
+      Stocktick and DMS modules operate on a responsive <strong>Mobile Grid</strong> designed for screen widths between <strong>401px and 412px</strong>, featuring a standard outer margin of <strong>16px</strong>. Desktop dashboard components are built for <strong>1440px wide screens</strong>.
+    </p>
+    
+    <h3>Standard Corner Radii Guide</h3>
+    <ul>
+      <li><strong>Small Details (Status Badges, Stepper Buttons):</strong> 4px - 8px</li>
+      <li><strong>Standard Cards &amp; Action Buttons:</strong> 12px - 16px</li>
+      <li><strong>Bottom Sheet Drawer Panels:</strong> 24px - 32px (Mixed top corners)</li>
+      <li><strong>Illustrative Avatar Circles:</strong> 40px+</li>
+    </ul>
+    
+    <div class="page-break"></div>
+    
+    <h1>4. Page Architectural Breakdown</h1>
+    <p>
+      The Figma document describes an integrated ecosystem for tyre store managers and relationship managers, mapped across 10 main pages:
+    </p>
+    
+    <div class="page-list-item">
+      <div class="page-title-row">
+        <span class="page-title">1. DMS Home Page ("DMS HOME PAGE")</span>
+        <span class="page-meta">Canvas ID: 6256:44</span>
+      </div>
+      <p style="font-size: 13px; margin: 0; color: #475569;">
+        The primary landing page welcoming users as <em>"Hello, Tyre Czar"</em>. Supports regional translations (Kannada, Tamil, Telugu, Malayalam). Launches core operations: <strong>Buy Tyres</strong>, <strong>Manage Store</strong>, <strong>Pay</strong>, and <strong>Sell Tyres</strong>.
+      </p>
+    </div>
+    
+    <div class="page-list-item">
+      <div class="page-title-row">
+        <span class="page-title">2. Inventory Dashboard ("inventory design final")</span>
+        <span class="page-meta">Canvas ID: 2534:91</span>
+      </div>
+      <p style="font-size: 13px; margin: 0; color: #475569;">
+        Comprehensive lists of in-hand stock filterable by vehicle category (Car, Bike, CV) and conditions (New, Used, Retread). Contains multi-step forms to add invoice items.
+      </p>
+    </div>
+    
+    <div class="page-list-item">
+      <div class="page-title-row">
+        <span class="page-title">3. Stock Take Flow ("Stocktick")</span>
+        <span class="page-meta">Canvas ID: 11358:1246</span>
+      </div>
+      <p style="font-size: 13px; margin: 0; color: #475569;">
+        Physical audit module grouped by vehicle category or tyre brand. Features expected quantity comparisons, inline count confirm steppers, discrepancy logs, and a success confirmation overlay.
+      </p>
+    </div>
+    
+    <div class="page-list-item">
+      <div class="page-title-row">
+        <span class="page-title">4. Ask Quote Bidding ("Ask_Quote_Dms")</span>
+        <span class="page-meta">Canvas ID: 4906:2</span>
+      </div>
+      <p style="font-size: 13px; margin: 0; color: #475569;">
+        B2B buying interface showing active live order bid collections, item variant sheets, cash splitting panels, and countdown timers.
+      </p>
+    </div>
+    
+    <div class="page-list-item">
+      <div class="page-title-row">
+        <span class="page-title">5. Supplier Pricing ("Supplier_tp_dms")</span>
+        <span class="page-meta">Canvas ID: 4025:36</span>
+      </div>
+      <p style="font-size: 13px; margin: 0; color: #475569;">
+        Suppliers' bidding interface showing incoming quote notifications, pricing forms, rejection reason inputs, and bid approvals.
+      </p>
+    </div>
+    
+    <div class="page-list-item">
+      <div class="page-title-row">
+        <span class="page-title">6. Reward Tiers ("Reward_screen")</span>
+        <span class="page-meta">Canvas ID: 3775:537</span>
+      </div>
+      <p style="font-size: 13px; margin: 0; color: #475569;">
+        Gamification layout detailing loyalty milestone badges (Silver, Gold, Platinum benefits) and reward earnings logs.
+      </p>
+    </div>
+    
+    <div class="page-list-item">
+      <div class="page-title-row">
+        <span class="page-title">7. Order History &amp; Outstandings ("DMS ORDER HISTORY")</span>
+        <span class="page-meta">Canvas ID: 6453:348</span>
+      </div>
+      <p style="font-size: 13px; margin: 0; color: #475569;">
+        Outstanding dues panel showing full/custom payment inputs, scheduled payment widgets, and bank confirmation cards.
+      </p>
+    </div>
+    
+    <div class="page-list-item">
+      <div class="page-title-row">
+        <span class="page-title">8. Relationship Manager App ("RM APP")</span>
+        <span class="page-meta">Canvas ID: 1190:65</span>
+      </div>
+      <p style="font-size: 13px; margin: 0; color: #475569;">
+        App version for relationship managers. Features credit note claims (CN records), warranty raises, and dealer directories.
+      </p>
+    </div>
+    
+    <div class="page-list-item">
+      <div class="page-title-row">
+        <span class="page-title">9. Next.js Desktop Dashboard ("Next js dashboard")</span>
+        <span class="page-meta">Canvas ID: 3175:1229</span>
+      </div>
+      <p style="font-size: 13px; margin: 0; color: #475569;">
+        Desktop web portal displaying statistics cards (Requests - 25, Quote Sent - 8623), list tables, and dual column layout grids.
+      </p>
+    </div>
+    
+    <div class="page-break"></div>
+    
+    <h1>5. Codebase vs. Figma Alignment Gap Analysis</h1>
+    
+    <div class="callout">
+      <div class="callout-title">⚠️ Essential Adjustments Needed</div>
+      <div class="callout-content">
+        Several styling discrepancies exist between the current codebase <code>src/App.tsx</code> and the official Figma specs. Fixing these will align the build with the premium brand aesthetic.
+      </div>
+    </div>
+    
+    <table>
+      <thead>
+        <tr>
+          <th>Category</th>
+          <th>Current Code Implementation</th>
+          <th>Figma Design Specification</th>
+          <th>Recommendation</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Typography</strong></td>
+          <td>Imports and renders <code>Plus Jakarta Sans</code></td>
+          <td>Uses <code>Poppins</code> for UI and numbers</td>
+          <td>Update CSS font imports to <code>Poppins</code></td>
+        </tr>
+        <tr>
+          <td><strong>Brand Colors</strong></td>
+          <td>Uses Tailwind defaults (e.g. <code>bg-red-500</code>)</td>
+          <td>Uses specific brand colors (e.g. Brand Red <code>#ED1D24</code>)</td>
+          <td>Map exact brand colors in Tailwind theme extend configurations</td>
+        </tr>
+        <tr>
+          <td><strong>Icons &amp; Assets</strong></td>
+          <td>Displays platform-dependent native emojis</td>
+          <td>Relies on custom vectors and unified emoji styles</td>
+          <td>Standardize emojis by replacing them with custom vector SVGs</td>
+        </tr>
+      </tbody>
+    </table>
+    
+    <h1>6. Premium Design Recommendations</h1>
+    <p>
+      Implementing these visual suggestions will ensure the DMS application looks state-of-the-art:
+    </p>
+    <ul>
+      <li><strong>Glassmorphic Drawers:</strong> Enable <code>backdrop-filter: blur(12px)</code> with a semi-transparent white background (<code>rgba(255,255,255,0.85)</code>) on bottom sheet headers.</li>
+      <li><strong>Tactile Presses:</strong> Add scale-down spring motions on steppers (<code>scale: 0.95</code>) when users click the count increment buttons.</li>
+      <li><strong>Blinking Live Bids:</strong> Apply subtle pulse keyframe animations on the active bid countdown badge in the Ask Quote page.</li>
+      <li><strong>Tier Elevation Celebrations:</strong> Use lightweight particle effects (confetti canvases) when store managers unlock new Gold/Platinum tier benefits.</li>
+    </ul>
+  </div>
+
+</body>
+</html>

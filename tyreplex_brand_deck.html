@@ -1,0 +1,1357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Tyreplex Brand Guidelines 2025</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+    
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    
+    body {
+      font-family: 'Poppins', sans-serif;
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+      color-adjust: exact !important;
+    }
+    
+    @page {
+      size: 1440px 810px;
+      margin: 0;
+    }
+    
+    .slide {
+      width: 1440px;
+      height: 810px;
+      page-break-after: always;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+    }
+
+    /* ============================= */
+    /* SLIDE 1 — COVER              */
+    /* ============================= */
+    .slide-cover {
+      background: #0a0e1a;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    .slide-cover::before {
+      content: '';
+      position: absolute;
+      top: -200px;
+      right: -200px;
+      width: 700px;
+      height: 700px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(237,29,36,0.15) 0%, transparent 70%);
+    }
+    .slide-cover::after {
+      content: '';
+      position: absolute;
+      bottom: -300px;
+      left: -150px;
+      width: 800px;
+      height: 800px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(237,29,36,0.08) 0%, transparent 70%);
+    }
+    .cover-logo {
+      position: absolute;
+      top: 50px;
+      left: 80px;
+    }
+    .cover-logo img { height: 44px; filter: brightness(0) invert(1); }
+    .cover-center {
+      text-align: center;
+      z-index: 2;
+    }
+    .cover-pill {
+      display: inline-block;
+      border: 1px solid rgba(237,29,36,0.5);
+      color: #ed1d24;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      padding: 8px 28px;
+      border-radius: 50px;
+      margin-bottom: 40px;
+    }
+    .cover-main-title {
+      font-size: 72px;
+      font-weight: 900;
+      color: #ffffff;
+      line-height: 1;
+      letter-spacing: -2px;
+    }
+    .cover-main-title span { color: #ed1d24; }
+    .cover-sub {
+      font-size: 20px;
+      font-weight: 300;
+      color: rgba(255,255,255,0.5);
+      margin-top: 20px;
+      letter-spacing: 1px;
+    }
+    .cover-bottom {
+      position: absolute;
+      bottom: 40px;
+      left: 80px;
+      right: 80px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding-top: 20px;
+      z-index: 2;
+    }
+    .cover-bottom-item {
+      font-size: 12px;
+      color: rgba(255,255,255,0.35);
+      letter-spacing: 0.5px;
+    }
+    .cover-bottom-item strong { color: rgba(255,255,255,0.6); }
+
+    /* ============================= */
+    /* SLIDE 2 — VISION              */
+    /* ============================= */
+    .slide-vision {
+      background: #ffffff;
+      flex-direction: row;
+    }
+    .vision-left {
+      width: 50%;
+      background: #ed1d24;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 80px;
+      position: relative;
+    }
+    .vision-left::after {
+      content: '';
+      position: absolute;
+      right: -60px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 120px;
+      height: 120px;
+      background: #ed1d24;
+      border-radius: 50%;
+    }
+    .vision-label {
+      font-size: 13px;
+      font-weight: 600;
+      color: rgba(255,255,255,0.6);
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      margin-bottom: 30px;
+    }
+    .vision-title {
+      font-size: 48px;
+      font-weight: 800;
+      color: #ffffff;
+      line-height: 1.1;
+    }
+    .vision-right {
+      width: 50%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 80px 80px 80px 100px;
+    }
+    .vision-desc {
+      font-size: 18px;
+      color: #627085;
+      line-height: 1.8;
+      margin-bottom: 40px;
+    }
+    .vision-pillars {
+      display: flex;
+      gap: 25px;
+    }
+    .vision-pillar {
+      flex: 1;
+      text-align: center;
+      padding: 20px 15px;
+      border: 1px solid #e5e8eb;
+      border-radius: 12px;
+    }
+    .vision-pillar-icon {
+      font-size: 28px;
+      margin-bottom: 8px;
+    }
+    .vision-pillar-name {
+      font-size: 13px;
+      font-weight: 700;
+      color: #121726;
+    }
+    .slide-num {
+      position: absolute;
+      bottom: 35px;
+      right: 60px;
+      font-size: 12px;
+      font-weight: 600;
+      color: rgba(0,0,0,0.2);
+    }
+    .slide-num-white {
+      color: rgba(255,255,255,0.25);
+    }
+
+    /* ============================= */
+    /* SLIDE 3 — ESSENCE             */
+    /* ============================= */
+    .slide-essence {
+      background: #0a0e1a;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 100px 180px;
+      text-align: center;
+    }
+    .essence-quote-mark {
+      font-size: 120px;
+      font-weight: 900;
+      color: #ed1d24;
+      line-height: 0.5;
+      margin-bottom: 10px;
+    }
+    .essence-text {
+      font-size: 28px;
+      font-weight: 400;
+      color: rgba(255,255,255,0.85);
+      line-height: 1.7;
+    }
+    .essence-text em {
+      font-style: normal;
+      color: #ed1d24;
+      font-weight: 600;
+    }
+
+    /* ============================= */
+    /* SLIDE 4 — TAGLINE             */
+    /* ============================= */
+    .slide-tagline {
+      background: #ffffff;
+      flex-direction: column;
+    }
+    .tagline-top {
+      height: 55%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 40px 80px 0;
+    }
+    .tagline-label {
+      font-size: 12px;
+      font-weight: 700;
+      color: #ed1d24;
+      text-transform: uppercase;
+      letter-spacing: 4px;
+      margin-bottom: 20px;
+    }
+    .tagline-main {
+      font-size: 56px;
+      font-weight: 900;
+      color: #121726;
+      line-height: 1;
+      letter-spacing: -1px;
+    }
+    .tagline-main .dot-red { color: #ed1d24; }
+    .tagline-main .dot-orange { color: #ff6b00; }
+    .tagline-main .dot-green { color: #00b633; }
+    .tagline-bottom {
+      height: 45%;
+      display: flex;
+      gap: 0;
+    }
+    .tagline-block {
+      flex: 1;
+      padding: 35px 45px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .tagline-block:nth-child(1) { background: #ed1d24; color: #fff; }
+    .tagline-block:nth-child(2) { background: #ff6b00; color: #fff; }
+    .tagline-block:nth-child(3) { background: #00b633; color: #fff; }
+    .tagline-block-num {
+      font-size: 48px;
+      font-weight: 900;
+      opacity: 0.25;
+      line-height: 1;
+      margin-bottom: 10px;
+    }
+    .tagline-block-title {
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+    .tagline-block-desc {
+      font-size: 13px;
+      font-weight: 400;
+      opacity: 0.85;
+      line-height: 1.6;
+    }
+
+    /* ============================= */
+    /* SLIDE 5 — ARCHETYPES          */
+    /* ============================= */
+    .slide-arche {
+      background: #f8f9fb;
+      flex-direction: column;
+      padding: 70px 80px;
+    }
+    .arche-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 50px;
+    }
+    .arche-title {
+      font-size: 42px;
+      font-weight: 800;
+      color: #121726;
+      line-height: 1;
+    }
+    .arche-subtitle {
+      font-size: 14px;
+      color: #627085;
+      max-width: 300px;
+      text-align: right;
+      line-height: 1.5;
+    }
+    .arche-cards {
+      display: flex;
+      gap: 30px;
+      flex: 1;
+    }
+    .arche-card {
+      flex: 1;
+      background: #ffffff;
+      border-radius: 20px;
+      padding: 40px 35px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.04);
+      border: 1px solid #e5e8eb;
+    }
+    .arche-card-pct {
+      font-size: 56px;
+      font-weight: 900;
+      color: #ed1d24;
+      line-height: 1;
+      margin-bottom: 15px;
+    }
+    .arche-card-name {
+      font-size: 22px;
+      font-weight: 700;
+      color: #121726;
+      margin-bottom: 10px;
+    }
+    .arche-card-attrs {
+      font-size: 13px;
+      color: #ed1d24;
+      font-weight: 600;
+      margin-bottom: 15px;
+    }
+    .arche-card-desc {
+      font-size: 13px;
+      color: #627085;
+      line-height: 1.7;
+    }
+
+    /* ============================= */
+    /* SLIDE 6 — PRIMARY COLOR       */
+    /* ============================= */
+    .slide-colors-primary {
+      background: #ffffff;
+      flex-direction: row;
+    }
+    .cp-left {
+      width: 45%;
+      padding: 70px 60px 70px 80px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .cp-label {
+      font-size: 12px;
+      font-weight: 700;
+      color: #ed1d24;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      margin-bottom: 15px;
+    }
+    .cp-title {
+      font-size: 42px;
+      font-weight: 800;
+      color: #121726;
+      line-height: 1.1;
+      margin-bottom: 20px;
+    }
+    .cp-desc {
+      font-size: 15px;
+      color: #627085;
+      line-height: 1.7;
+    }
+    .cp-right {
+      width: 55%;
+      display: flex;
+      flex-direction: column;
+    }
+    .cp-swatch {
+      flex: 1;
+      display: flex;
+      align-items: flex-end;
+      padding: 30px 40px;
+      background: #ed1d24;
+      border-radius: 0 0 0 40px;
+    }
+    .cp-swatch-info {
+      color: #ffffff;
+    }
+    .cp-swatch-name {
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .cp-swatch-hex {
+      font-family: 'Poppins', sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      opacity: 0.7;
+    }
+    .cp-swatch-rgb {
+      font-family: 'Poppins', sans-serif;
+      font-size: 12px;
+      opacity: 0.45;
+      margin-top: 2px;
+    }
+
+    /* ============================= */
+    /* SLIDE 7 — FUNCTIONAL COLORS   */
+    /* ============================= */
+    .slide-colors-func {
+      background: #0a0e1a;
+      flex-direction: column;
+      padding: 70px 80px;
+    }
+    .cf-header {
+      margin-bottom: 45px;
+    }
+    .cf-title {
+      font-size: 36px;
+      font-weight: 800;
+      color: #ffffff;
+      margin-bottom: 8px;
+    }
+    .cf-sub {
+      font-size: 14px;
+      color: rgba(255,255,255,0.4);
+    }
+    .cf-grid {
+      display: flex;
+      gap: 25px;
+      flex: 1;
+    }
+    .cf-card {
+      flex: 1;
+      border-radius: 20px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    .cf-card-color {
+      height: 55%;
+      display: flex;
+      align-items: flex-end;
+      padding: 25px;
+    }
+    .cf-card-body {
+      height: 45%;
+      background: rgba(255,255,255,0.06);
+      padding: 25px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .cf-card-name {
+      font-size: 18px;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 4px;
+    }
+    .cf-card-hex {
+      font-family: 'Poppins', sans-serif;
+      font-size: 13px;
+      color: rgba(255,255,255,0.55);
+    }
+    .cf-card-use {
+      font-size: 12px;
+      color: rgba(255,255,255,0.4);
+      line-height: 1.5;
+      margin-top: 8px;
+    }
+
+    /* ============================= */
+    /* SLIDE 8 — NEUTRAL PALETTE     */
+    /* ============================= */
+    .slide-neutrals {
+      background: #ffffff;
+      flex-direction: column;
+      padding: 70px 80px;
+    }
+    .neut-title {
+      font-size: 36px;
+      font-weight: 800;
+      color: #121726;
+      margin-bottom: 40px;
+    }
+    .neut-strip {
+      display: flex;
+      border-radius: 20px;
+      overflow: hidden;
+      height: 180px;
+      margin-bottom: 30px;
+    }
+    .neut-strip-item {
+      flex: 1;
+      display: flex;
+      align-items: flex-end;
+      padding: 20px;
+    }
+    .neut-strip-label {
+      font-size: 12px;
+      font-weight: 600;
+    }
+    .neut-strip-hex {
+      font-family: 'Poppins', sans-serif;
+      font-size: 11px;
+      opacity: 0.6;
+      margin-top: 2px;
+    }
+    .neut-desc {
+      font-size: 14px;
+      color: #627085;
+      line-height: 1.7;
+      max-width: 700px;
+    }
+
+    /* ============================= */
+    /* SLIDE 9 — TYPOGRAPHY          */
+    /* ============================= */
+    .slide-typo {
+      background: #f8f9fb;
+      flex-direction: row;
+    }
+    .typo-left {
+      width: 40%;
+      background: #121726;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 70px 60px;
+    }
+    .typo-left-label {
+      font-size: 12px;
+      font-weight: 700;
+      color: #ed1d24;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      margin-bottom: 25px;
+    }
+    .typo-left-title {
+      font-size: 52px;
+      font-weight: 800;
+      color: #ffffff;
+      line-height: 1.1;
+      margin-bottom: 20px;
+    }
+    .typo-left-desc {
+      font-size: 14px;
+      color: rgba(255,255,255,0.45);
+      line-height: 1.7;
+    }
+    .typo-right {
+      width: 60%;
+      padding: 60px 80px 60px 60px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 20px;
+    }
+    .typo-specimen {
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 30px 35px;
+      border: 1px solid #e5e8eb;
+    }
+    .typo-specimen-label {
+      font-size: 11px;
+      font-weight: 700;
+      color: #ed1d24;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 15px;
+    }
+    .typo-specimen-row {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      padding: 8px 0;
+      border-bottom: 1px solid #f1f5f9;
+    }
+    .typo-specimen-row:last-child { border-bottom: none; }
+    .typo-specimen-sample { color: #121726; }
+    .typo-specimen-meta {
+      font-family: 'Poppins', sans-serif;
+      font-size: 11px;
+      color: #a9afb5;
+      white-space: nowrap;
+    }
+
+    /* ============================= */
+    /* SLIDE 10 — LOGO               */
+    /* ============================= */
+    .slide-logo {
+      background: #ffffff;
+      flex-direction: column;
+    }
+    .logo-top {
+      height: 55%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #f8f9fb;
+      position: relative;
+    }
+    .logo-top img {
+      height: 80px;
+    }
+    .logo-clearspace {
+      position: absolute;
+      border: 2px dashed #ed1d24;
+      opacity: 0.3;
+      border-radius: 8px;
+      padding: 50px 80px;
+    }
+    .logo-clearspace-label {
+      position: absolute;
+      top: -22px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 10px;
+      font-weight: 700;
+      color: #ed1d24;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+    .logo-bottom {
+      height: 45%;
+      padding: 35px 80px;
+      display: flex;
+      gap: 40px;
+    }
+    .logo-variant {
+      flex: 1;
+      border: 1px solid #e5e8eb;
+      border-radius: 16px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    .logo-variant-display {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .logo-variant-display img { height: 35px; }
+    .logo-variant-display.on-dark img { filter: brightness(0) invert(1); }
+    .logo-variant-display.on-red img { filter: brightness(0) invert(1); }
+    .logo-variant-label {
+      padding: 12px 20px;
+      background: #f8f9fb;
+      font-size: 12px;
+      font-weight: 600;
+      color: #627085;
+      text-align: center;
+      border-top: 1px solid #e5e8eb;
+    }
+
+    /* ============================= */
+    /* SLIDE 11 — LAYOUT GRID        */
+    /* ============================= */
+    .slide-layout {
+      background: #0a0e1a;
+      flex-direction: column;
+      padding: 70px 80px;
+    }
+    .layout-title {
+      font-size: 36px;
+      font-weight: 800;
+      color: #ffffff;
+      margin-bottom: 45px;
+    }
+    .layout-grid {
+      display: flex;
+      gap: 25px;
+      flex: 1;
+    }
+    .layout-card {
+      flex: 1;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 20px;
+      padding: 35px 30px;
+      display: flex;
+      flex-direction: column;
+    }
+    .layout-card-icon {
+      width: 56px;
+      height: 56px;
+      background: rgba(237,29,36,0.12);
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 25px;
+      font-size: 24px;
+      color: #ed1d24;
+    }
+    .layout-card-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 10px;
+    }
+    .layout-card-val {
+      font-family: 'Poppins', sans-serif;
+      font-size: 32px;
+      font-weight: 700;
+      color: #ed1d24;
+      margin-bottom: 10px;
+    }
+    .layout-card-desc {
+      font-size: 12px;
+      color: rgba(255,255,255,0.4);
+      line-height: 1.6;
+    }
+
+    /* ============================= */
+    /* SLIDE 12 — ICONOGRAPHY        */
+    /* ============================= */
+    .slide-icons {
+      background: #ffffff;
+      flex-direction: column;
+      padding: 70px 80px;
+    }
+    .icons-title {
+      font-size: 36px;
+      font-weight: 800;
+      color: #121726;
+      margin-bottom: 15px;
+    }
+    .icons-sub {
+      font-size: 14px;
+      color: #627085;
+      margin-bottom: 40px;
+    }
+    .icons-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 20px;
+      flex: 1;
+    }
+    .icon-cell {
+      border: 1px solid #e5e8eb;
+      border-radius: 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 25px 15px;
+      background: #f8f9fb;
+    }
+    .icon-cell svg {
+      width: 36px;
+      height: 36px;
+      stroke: #121726;
+      stroke-width: 1.8;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .icon-cell-name {
+      font-size: 11px;
+      font-weight: 600;
+      color: #627085;
+      margin-top: 12px;
+      text-align: center;
+    }
+
+    /* ============================= */
+    /* SLIDE 13 — PHOTOGRAPHY        */
+    /* ============================= */
+    .slide-photo {
+      background: #f8f9fb;
+      flex-direction: row;
+    }
+    .photo-left {
+      width: 50%;
+      padding: 70px 60px 70px 80px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .photo-title {
+      font-size: 36px;
+      font-weight: 800;
+      color: #121726;
+      margin-bottom: 25px;
+      line-height: 1.1;
+    }
+    .photo-rule {
+      display: flex;
+      align-items: flex-start;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+    .photo-rule-num {
+      width: 32px;
+      height: 32px;
+      background: #ed1d24;
+      color: #fff;
+      font-size: 14px;
+      font-weight: 700;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .photo-rule-text {
+      font-size: 14px;
+      color: #627085;
+      line-height: 1.6;
+    }
+    .photo-rule-text strong { color: #121726; }
+    .photo-right {
+      width: 50%;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      padding: 70px 80px 70px 40px;
+      justify-content: center;
+    }
+    .photo-card {
+      background: #ffffff;
+      border: 1px solid #e5e8eb;
+      border-radius: 16px;
+      padding: 25px 30px;
+    }
+    .photo-card-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: #121726;
+      margin-bottom: 6px;
+    }
+    .photo-card-desc {
+      font-size: 12px;
+      color: #627085;
+      line-height: 1.5;
+    }
+
+    /* ============================= */
+    /* SLIDE 14 — CLOSING            */
+    /* ============================= */
+    .slide-closing {
+      background: #0a0e1a;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+    .slide-closing::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 500px;
+      height: 500px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(237,29,36,0.1) 0%, transparent 70%);
+    }
+    .closing-logo img { height: 50px; margin-bottom: 40px; filter: brightness(0) invert(1); }
+    .closing-tagline {
+      font-size: 44px;
+      font-weight: 800;
+      color: #ffffff;
+      line-height: 1.2;
+      z-index: 2;
+    }
+    .closing-tagline span { color: #ed1d24; }
+    .closing-year {
+      font-size: 14px;
+      color: rgba(255,255,255,0.25);
+      margin-top: 30px;
+      letter-spacing: 3px;
+      z-index: 2;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- SLIDE 1: COVER -->
+  <div class="slide slide-cover">
+    <div class="cover-logo">
+      <img src="https://cdn.tyreplex.com/themes/moonlight/images/TP-logo.png" alt="Tyreplex" />
+    </div>
+    <div class="cover-center">
+      <div class="cover-pill">Brand Identity System</div>
+      <h1 class="cover-main-title">Brand<br/>Guide<span>line.</span></h1>
+      <p class="cover-sub">Visual Language &amp; Design System for Tyreplex</p>
+    </div>
+    <div class="cover-bottom">
+      <span class="cover-bottom-item"><strong>Prepared for</strong>&ensp;Tyreplex DMS</span>
+      <span class="cover-bottom-item"><strong>Version</strong>&ensp;1.0</span>
+      <span class="cover-bottom-item"><strong>Date</strong>&ensp;July 2026</span>
+    </div>
+    <span class="slide-num slide-num-white">01</span>
+  </div>
+
+  <!-- SLIDE 2: VISION -->
+  <div class="slide slide-vision">
+    <div class="vision-left">
+      <span class="vision-label">Our Vision</span>
+      <h2 class="vision-title">Digitize &amp;<br/>Empower<br/>Tyre Retail.</h2>
+    </div>
+    <div class="vision-right">
+      <p class="vision-desc">
+        We simplify and streamline tyre retail operations, stock management, and B2B pricing for dealers and distributors through intelligent, mobile-first digital tools.
+      </p>
+      <div class="vision-pillars">
+        <div class="vision-pillar">
+          <div class="vision-pillar-icon">🤝</div>
+          <div class="vision-pillar-name">Trust</div>
+        </div>
+        <div class="vision-pillar">
+          <div class="vision-pillar-icon">⚡</div>
+          <div class="vision-pillar-name">Efficiency</div>
+        </div>
+        <div class="vision-pillar">
+          <div class="vision-pillar-icon">📊</div>
+          <div class="vision-pillar-name">Clarity</div>
+        </div>
+      </div>
+    </div>
+    <span class="slide-num">02</span>
+  </div>
+
+  <!-- SLIDE 3: ESSENCE -->
+  <div class="slide slide-essence">
+    <div class="essence-quote-mark">"</div>
+    <p class="essence-text">
+      To bridge the gap between <em>traditional tyre retailers</em> and <em>modern digital supply chains</em>, empowering businesses with intelligent mobile-first tools that transform manual shop management into a <em>streamlined digital experience</em>.
+    </p>
+    <span class="slide-num slide-num-white">03</span>
+  </div>
+
+  <!-- SLIDE 4: TAGLINE -->
+  <div class="slide slide-tagline">
+    <div class="tagline-top">
+      <span class="tagline-label">Core Tagline</span>
+      <h2 class="tagline-main">
+        Smart Audit<span class="dot-red">.</span> 
+        Live Bids<span class="dot-orange">.</span> 
+        Best Deal<span class="dot-green">.</span>
+      </h2>
+    </div>
+    <div class="tagline-bottom">
+      <div class="tagline-block">
+        <div class="tagline-block-num">01</div>
+        <div class="tagline-block-title">Smart Audit</div>
+        <div class="tagline-block-desc">High-speed mobile stocktakes with offline sync, barcode scanning, and real-time variance reconciliation.</div>
+      </div>
+      <div class="tagline-block">
+        <div class="tagline-block-num">02</div>
+        <div class="tagline-block-title">Live Bids</div>
+        <div class="tagline-block-desc">Active B2B quote bidding with countdown timers, enabling local distributors to compete in real-time.</div>
+      </div>
+      <div class="tagline-block">
+        <div class="tagline-block-num">03</div>
+        <div class="tagline-block-title">Best Deal</div>
+        <div class="tagline-block-desc">Automated profit margin estimation and intelligent reordering that maximizes dealer earnings.</div>
+      </div>
+    </div>
+    <span class="slide-num">04</span>
+  </div>
+
+  <!-- SLIDE 5: ARCHETYPES -->
+  <div class="slide slide-arche">
+    <div class="arche-header">
+      <h2 class="arche-title">Voice<br/>Archetypes</h2>
+      <p class="arche-subtitle">Our brand personality is a structured blend of three core archetypes that guide all creative expression.</p>
+    </div>
+    <div class="arche-cards">
+      <div class="arche-card">
+        <div>
+          <div class="arche-card-pct">50%</div>
+          <div class="arche-card-name">The Partner</div>
+          <div class="arche-card-attrs">Collaborative · Helpful · Localized</div>
+        </div>
+        <div class="arche-card-desc">Relatable, supportive, and down-to-earth. Speaks in a clear, simple voice that respects the dealer's daily workflow.</div>
+      </div>
+      <div class="arche-card">
+        <div>
+          <div class="arche-card-pct">30%</div>
+          <div class="arche-card-name">The Organizer</div>
+          <div class="arche-card-attrs">Systematic · Precise · Reliable</div>
+        </div>
+        <div class="arche-card-desc">Clean, structured, and data-focused. Organizes complex tyre specs and billing into high-density, readable layouts.</div>
+      </div>
+      <div class="arche-card">
+        <div>
+          <div class="arche-card-pct">20%</div>
+          <div class="arche-card-name">The Innovator</div>
+          <div class="arche-card-attrs">Tech-forward · Proactive · Efficient</div>
+        </div>
+        <div class="arche-card-desc">Pioneering and active. Showcases modern features like OCR scanning, instant bidding, and automated par levels.</div>
+      </div>
+    </div>
+    <span class="slide-num">05</span>
+  </div>
+
+  <!-- SLIDE 6: PRIMARY COLOR -->
+  <div class="slide slide-colors-primary">
+    <div class="cp-left">
+      <span class="cp-label">Color System</span>
+      <h2 class="cp-title">Primary<br/>Brand Color</h2>
+      <p class="cp-desc">Our single primary brand color anchors every Tyreplex interface. It drives action, urgency, and brand recognition across all platforms.</p>
+    </div>
+    <div class="cp-right">
+      <div class="cp-swatch">
+        <div class="cp-swatch-info">
+          <div class="cp-swatch-name">Tyreplex Red</div>
+          <div class="cp-swatch-hex">#ED1D24</div>
+          <div class="cp-swatch-rgb">RGB 237, 29, 36 &nbsp;|&nbsp; CMYK 0, 98, 95, 7</div>
+        </div>
+      </div>
+    </div>
+    <span class="slide-num">06</span>
+  </div>
+
+  <!-- SLIDE 7: FUNCTIONAL COLORS -->
+  <div class="slide slide-colors-func">
+    <div class="cf-header">
+      <h2 class="cf-title">Functional Accents</h2>
+      <p class="cf-sub">Status-driven colors for immediate recognition in fast-paced retail environments.</p>
+    </div>
+    <div class="cf-grid">
+      <div class="cf-card">
+        <div class="cf-card-color" style="background: #00b633;">
+          <div class="cp-swatch-info">
+            <div class="cp-swatch-name">Success Green</div>
+            <div class="cp-swatch-hex" style="opacity:0.7;">#00B633</div>
+          </div>
+        </div>
+        <div class="cf-card-body">
+          <div class="cf-card-use">Verified stock counts, positive variances, payment confirmations, and completion states.</div>
+        </div>
+      </div>
+      <div class="cf-card">
+        <div class="cf-card-color" style="background: #ff6b00;">
+          <div class="cp-swatch-info">
+            <div class="cp-swatch-name">Bidding Orange</div>
+            <div class="cp-swatch-hex" style="opacity:0.7;">#FF6B00</div>
+          </div>
+        </div>
+        <div class="cf-card-body">
+          <div class="cf-card-use">Active countdown timers, pending bids, surplus warnings, and quantity badges.</div>
+        </div>
+      </div>
+      <div class="cf-card">
+        <div class="cf-card-color" style="background: #0066ff;">
+          <div class="cp-swatch-info">
+            <div class="cp-swatch-name">Info Blue</div>
+            <div class="cp-swatch-hex" style="opacity:0.7;">#0066FF</div>
+          </div>
+        </div>
+        <div class="cf-card-body">
+          <div class="cf-card-use">Technical SKU labels, BNPL credit information, and interactive hyperlinks.</div>
+        </div>
+      </div>
+    </div>
+    <span class="slide-num slide-num-white">07</span>
+  </div>
+
+  <!-- SLIDE 8: NEUTRALS -->
+  <div class="slide slide-neutrals">
+    <h2 class="neut-title">Neutral Palette</h2>
+    <div class="neut-strip">
+      <div class="neut-strip-item" style="background: #121726;">
+        <div>
+          <div class="neut-strip-label" style="color: #fff;">Midnight</div>
+          <div class="neut-strip-hex" style="color: rgba(255,255,255,0.5);">#121726</div>
+        </div>
+      </div>
+      <div class="neut-strip-item" style="background: #627085;">
+        <div>
+          <div class="neut-strip-label" style="color: #fff;">Slate Gray</div>
+          <div class="neut-strip-hex" style="color: rgba(255,255,255,0.5);">#627085</div>
+        </div>
+      </div>
+      <div class="neut-strip-item" style="background: #a9afb5;">
+        <div>
+          <div class="neut-strip-label" style="color: #fff;">Steel Silver</div>
+          <div class="neut-strip-hex" style="color: rgba(255,255,255,0.5);">#A9AFB5</div>
+        </div>
+      </div>
+      <div class="neut-strip-item" style="background: #e5e8eb;">
+        <div>
+          <div class="neut-strip-label" style="color: #627085;">Border Gray</div>
+          <div class="neut-strip-hex" style="color: #627085;">#E5E8EB</div>
+        </div>
+      </div>
+      <div class="neut-strip-item" style="background: #f7fafa;">
+        <div>
+          <div class="neut-strip-label" style="color: #627085;">Frost Canvas</div>
+          <div class="neut-strip-hex" style="color: #627085;">#F7FAFA</div>
+        </div>
+      </div>
+      <div class="neut-strip-item" style="background: #ffffff; border: 1px solid #e5e8eb;">
+        <div>
+          <div class="neut-strip-label" style="color: #627085;">Pure White</div>
+          <div class="neut-strip-hex" style="color: #627085;">#FFFFFF</div>
+        </div>
+      </div>
+    </div>
+    <p class="neut-desc">A carefully curated grayscale palette that provides depth, hierarchy, and readability across light and dark interface contexts.</p>
+    <span class="slide-num">08</span>
+  </div>
+
+  <!-- SLIDE 9: TYPOGRAPHY -->
+  <div class="slide slide-typo">
+    <div class="typo-left">
+      <span class="typo-left-label">Typography</span>
+      <h2 class="typo-left-title">Poppins</h2>
+      <p class="typo-left-desc">Poppins is our one and only typeface. It reflects the brand's modern, geometric, and dynamic identity — used everywhere from headlines to data tables.</p>
+    </div>
+    <div class="typo-right">
+      <div class="typo-specimen">
+        <div class="typo-specimen-label">Poppins — Weight Scale</div>
+        <div class="typo-specimen-row">
+          <span class="typo-specimen-sample" style="font-size: 28px; font-weight: 800;">ExtraBold Headline</span>
+          <span class="typo-specimen-meta">800 · 20–24px</span>
+        </div>
+        <div class="typo-specimen-row">
+          <span class="typo-specimen-sample" style="font-size: 22px; font-weight: 700;">Bold Metrics &amp; Totals</span>
+          <span class="typo-specimen-meta">700 · 18–22px</span>
+        </div>
+        <div class="typo-specimen-row">
+          <span class="typo-specimen-sample" style="font-size: 18px; font-weight: 600;">SemiBold Subhead</span>
+          <span class="typo-specimen-meta">600 · 16–18px</span>
+        </div>
+        <div class="typo-specimen-row">
+          <span class="typo-specimen-sample" style="font-size: 15px; font-weight: 500;">Medium Body Copy</span>
+          <span class="typo-specimen-meta">500 · 14–15px</span>
+        </div>
+        <div class="typo-specimen-row">
+          <span class="typo-specimen-sample" style="font-size: 13px; font-weight: 400;">Regular Descriptions &amp; Labels</span>
+          <span class="typo-specimen-meta">400 · 12–13px</span>
+        </div>
+      </div>
+      <div class="typo-specimen">
+        <div class="typo-specimen-label">Poppins in Context</div>
+        <div class="typo-specimen-row">
+          <span class="typo-specimen-sample" style="font-size: 22px; font-weight: 700;">₹ 75,000.00</span>
+          <span class="typo-specimen-meta">700 · Metric totals</span>
+        </div>
+        <div class="typo-specimen-row">
+          <span class="typo-specimen-sample" style="font-size: 15px; font-weight: 500;">185/65 R15 88H</span>
+          <span class="typo-specimen-meta">500 · Tyre specs</span>
+        </div>
+        <div class="typo-specimen-row">
+          <span class="typo-specimen-sample" style="font-size: 12px; font-weight: 400; color: #627085;">Last audited: 2 hours ago</span>
+          <span class="typo-specimen-meta">400 · Timestamps</span>
+        </div>
+      </div>
+    </div>
+    <span class="slide-num">09</span>
+  </div>
+
+  <!-- SLIDE 10: LOGO -->
+  <div class="slide slide-logo">
+    <div class="logo-top">
+      <div class="logo-clearspace">
+        <span class="logo-clearspace-label">50% X Clear Space</span>
+      </div>
+      <img src="https://cdn.tyreplex.com/themes/moonlight/images/TP-logo.png" alt="Tyreplex Logo" />
+    </div>
+    <div class="logo-bottom">
+      <div class="logo-variant">
+        <div class="logo-variant-display" style="background: #ffffff;">
+          <img src="https://cdn.tyreplex.com/themes/moonlight/images/TP-logo.png" alt="Logo on Light" />
+        </div>
+        <div class="logo-variant-label">On White Background</div>
+      </div>
+      <div class="logo-variant">
+        <div class="logo-variant-display on-dark" style="background: #121726;">
+          <img src="https://cdn.tyreplex.com/themes/moonlight/images/TP-logo.png" alt="Logo on Dark — Fully White" />
+        </div>
+        <div class="logo-variant-label">On Dark — Fully White</div>
+      </div>
+      <div class="logo-variant">
+        <div class="logo-variant-display on-red" style="background: #ed1d24;">
+          <img src="https://cdn.tyreplex.com/themes/moonlight/images/TP-logo.png" alt="Logo on Red — Tyre White" />
+        </div>
+        <div class="logo-variant-label">On Brand Red — "Tyre" White</div>
+      </div>
+    </div>
+    <span class="slide-num">10</span>
+  </div>
+
+  <!-- SLIDE 11: LAYOUT RULES -->
+  <div class="slide slide-layout">
+    <h2 class="layout-title">Mobile Layout System</h2>
+    <div class="layout-grid">
+      <div class="layout-card">
+        <div class="layout-card-icon">📱</div>
+        <div class="layout-card-title">Viewport</div>
+        <div class="layout-card-val">412px</div>
+        <div class="layout-card-desc">Standard mobile grid width with 16px outer margins on both sides.</div>
+      </div>
+      <div class="layout-card">
+        <div class="layout-card-icon">🔲</div>
+        <div class="layout-card-title">Card Radius</div>
+        <div class="layout-card-val">16px</div>
+        <div class="layout-card-desc">Standard content cards use 12–16px radii. Badges use 4px. Bottom sheets use 24px top corners.</div>
+      </div>
+      <div class="layout-card">
+        <div class="layout-card-icon">➕</div>
+        <div class="layout-card-title">Touch Target</div>
+        <div class="layout-card-val">44px</div>
+        <div class="layout-card-desc">Minimum touch target for quantity steppers and action buttons in warehouse conditions.</div>
+      </div>
+      <div class="layout-card">
+        <div class="layout-card-icon">📐</div>
+        <div class="layout-card-title">Spacing</div>
+        <div class="layout-card-val">8px</div>
+        <div class="layout-card-desc">Base spacing unit. Card gaps use 8–12px. Section gaps use 16–24px multiples.</div>
+      </div>
+    </div>
+    <span class="slide-num slide-num-white">11</span>
+  </div>
+
+  <!-- SLIDE 12: ICONOGRAPHY -->
+  <div class="slide slide-icons">
+    <h2 class="icons-title">Iconography</h2>
+    <p class="icons-sub">Clean, minimal line-based icons with 2px stroke weight and rounded joints. Optimized for 24×24px grid.</p>
+    <div class="icons-grid">
+      <div class="icon-cell">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+        <span class="icon-cell-name">Tyre</span>
+      </div>
+      <div class="icon-cell">
+        <svg viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+        <span class="icon-cell-name">Currency</span>
+      </div>
+      <div class="icon-cell">
+        <svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+        <span class="icon-cell-name">Package</span>
+      </div>
+      <div class="icon-cell">
+        <svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+        <span class="icon-cell-name">Verified</span>
+      </div>
+      <div class="icon-cell">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        <span class="icon-cell-name">Timer</span>
+      </div>
+      <div class="icon-cell">
+        <svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+        <span class="icon-cell-name">Camera</span>
+      </div>
+      <div class="icon-cell">
+        <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+        <span class="icon-cell-name">Dashboard</span>
+      </div>
+      <div class="icon-cell">
+        <svg viewBox="0 0 24 24"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/></svg>
+        <span class="icon-cell-name">Clipboard</span>
+      </div>
+      <div class="icon-cell">
+        <svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+        <span class="icon-cell-name">Invoice</span>
+      </div>
+      <div class="icon-cell">
+        <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+        <span class="icon-cell-name">View</span>
+      </div>
+      <div class="icon-cell">
+        <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        <span class="icon-cell-name">Users</span>
+      </div>
+      <div class="icon-cell">
+        <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        <span class="icon-cell-name">Analytics</span>
+      </div>
+    </div>
+    <span class="slide-num">12</span>
+  </div>
+
+  <!-- SLIDE 13: PHOTOGRAPHY -->
+  <div class="slide slide-photo">
+    <div class="photo-left">
+      <h2 class="photo-title">Photography<br/>&amp; Media</h2>
+      <div class="photo-rule">
+        <div class="photo-rule-num">1</div>
+        <div class="photo-rule-text"><strong>Clean White Background.</strong> Tyre product shots must be placed against a solid white or light grey background with a soft shadow.</div>
+      </div>
+      <div class="photo-rule">
+        <div class="photo-rule-num">2</div>
+        <div class="photo-rule-text"><strong>Tread Visibility.</strong> Sidewall size markings (section width, aspect ratio) must be clearly legible in all product photos.</div>
+      </div>
+      <div class="photo-rule">
+        <div class="photo-rule-num">3</div>
+        <div class="photo-rule-text"><strong>Condition Segmentation.</strong> Visually differentiate New, Used, and Retread tyre images with distinct badge overlays.</div>
+      </div>
+    </div>
+    <div class="photo-right">
+      <div class="photo-card">
+        <div class="photo-card-title">📷 Image Upload Containers</div>
+        <div class="photo-card-desc">Dashed red border (#ED1D24), light pink background (#FCF2F2), with centered camera icon placeholder.</div>
+      </div>
+      <div class="photo-card">
+        <div class="photo-card-title">🖼️ Invoice OCR Scans</div>
+        <div class="photo-card-desc">Camera viewfinder overlay with auto-crop guidelines and edge-detection highlighting for invoice boundaries.</div>
+      </div>
+      <div class="photo-card">
+        <div class="photo-card-title">📱 App Screenshots</div>
+        <div class="photo-card-desc">Captured at 412px width on standard Android devices. Dark status bar, consistent system font rendering.</div>
+      </div>
+    </div>
+    <span class="slide-num">13</span>
+  </div>
+
+  <!-- SLIDE 14: CLOSING -->
+  <div class="slide slide-closing">
+    <div class="closing-logo">
+      <img src="https://cdn.tyreplex.com/themes/moonlight/images/TP-logo.png" alt="Tyreplex" />
+    </div>
+    <h2 class="closing-tagline">Smart Audit<span>.</span> Live Bids<span>.</span><br/>Best Deal<span>.</span></h2>
+    <p class="closing-year">© TYREPLEX 2026 — BRAND IDENTITY SYSTEM</p>
+    <span class="slide-num slide-num-white">14</span>
+  </div>
+
+</body>
+</html>

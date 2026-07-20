@@ -39,6 +39,8 @@ import { motion, AnimatePresence } from 'motion/react';
 export default function App() {
   const [isActionMenuOpen, setIsActionMenuOpen] = useState(false);
   const [currentScreen, setCurrentScreen] = useState<'home' | 'stockTick' | 'addTyre' | 'history'>('home');
+  const [syncEnabled, setSyncEnabled] = useState(true);
+  const [showSyncDisableModal, setShowSyncDisableModal] = useState(false);
 
   return (
     <>
@@ -65,6 +67,46 @@ export default function App() {
             <History className="w-6 h-6 stroke-[2]" />
           </button>
         </div>
+
+        {/* Sync Toggle Row */}
+        <button
+          onClick={() => {
+            if (syncEnabled) {
+              setShowSyncDisableModal(true);
+            } else {
+              setSyncEnabled(true);
+            }
+          }}
+          className={`flex items-center justify-between w-full px-5 py-3 border-b transition-all duration-200 ${
+            syncEnabled ? 'bg-[#f0fdf4] border-[#bbf7d0]' : 'bg-[#fff1f2] border-[#ffe4e6]'
+          }`}
+        >
+          <div className="flex items-start gap-2.5 max-w-[80%]">
+            <div className={`w-2.5 h-2.5 rounded-full mt-1 shrink-0 transition-colors duration-200 ${
+              syncEnabled ? 'bg-[#22c55e]' : 'bg-[#ef4444] animate-pulse'
+            }`} />
+            <div className="flex flex-col items-start text-left">
+              <span className={`text-[13px] font-bold transition-colors duration-200 ${
+                syncEnabled ? 'text-[#15803d]' : 'text-[#b91c1c]'
+              }`}>
+                {syncEnabled ? 'Sync is ON — Inventory live' : 'Sync is OFF'}
+              </span>
+              {!syncEnabled && (
+                <span className="text-[10px] font-medium text-[#991b1b] mt-0.5 leading-normal">
+                  Without Backup, your data is at risk.
+                </span>
+              )}
+            </div>
+          </div>
+          {/* Pill toggle */}
+          <div className={`relative w-11 h-6 rounded-full shrink-0 transition-colors duration-300 ${
+            syncEnabled ? 'bg-[#22c55e]' : 'bg-[#d1d5db]'
+          }`}>
+            <div className={`absolute top-[3px] w-[18px] h-[18px] bg-white rounded-full shadow-sm transition-all duration-300 ${
+              syncEnabled ? 'left-[22px]' : 'left-[3px]'
+            }`} />
+          </div>
+        </button>
 
         {/* Scrollable Content */}
         <div className="flex-1 overflow-y-auto pb-24 px-5 pt-5 custom-scrollbar relative">
@@ -316,6 +358,118 @@ export default function App() {
                     <p className="text-[16px] font-bold text-[#000000]">Audit History</p>
                     <p className="text-[12px] text-[#627085] font-medium">View past stock takes</p>
                   </div>
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Sync Disable Confirmation Modal */}
+        {showSyncDisableModal && (
+          <div className="absolute inset-0 z-40 flex items-center justify-center rounded-[2.5rem] overflow-hidden p-4">
+            {/* Backdrop */}
+            <div 
+              className="absolute inset-0 bg-[#000000]/50 backdrop-blur-xs transition-opacity"
+              onClick={() => setShowSyncDisableModal(false)}
+            ></div>
+            
+            {/* Modal Card */}
+            <div 
+              className="relative w-full max-w-[320px] bg-white rounded-3xl p-5 shadow-2xl border border-[#e5e7eb] flex flex-col"
+              style={{ animation: 'scaleUp 0.2s cubic-bezier(0.16, 1, 0.3, 1)' }}
+            >
+              {/* Header */}
+              <div className="text-center mb-4">
+                <div className="w-11 h-11 bg-[#fff1f2] border border-[#ffe4e6] text-[#ef4444] rounded-full flex items-center justify-center mx-auto mb-2.5">
+                  <AlertCircle className="w-5.5 h-5.5 stroke-[2.5]" />
+                </div>
+                <h3 className="text-[17px] font-bold text-[#111827] tracking-tight">Disable TyrePlex Cloud Sync?</h3>
+              </div>
+
+              {/* Grid Comparison */}
+              <div className="border border-[#e5e7eb] rounded-2xl overflow-hidden mb-3.5 text-[12px] bg-[#fafafa]">
+                {/* Header */}
+                <div className="grid grid-cols-12 bg-[#f3f4f6] border-b border-[#e5e7eb] font-bold text-[#374151] items-stretch">
+                  <div className="col-span-6 text-left px-3.5 py-2 flex items-center">Feature</div>
+                  <div className="col-span-3 text-center text-[#15803d] bg-[#dcfce7] py-2 flex items-center justify-center text-[11px]">Sync ON</div>
+                  <div className="col-span-3 text-center text-[#ef4444] py-2 flex items-center justify-center text-[11px]">Sync OFF</div>
+                </div>
+
+                {/* Rows */}
+                <div className="divide-y divide-[#e5e7eb]">
+                  <div className="grid grid-cols-12 items-stretch font-medium text-[#4b5563]">
+                    <div className="col-span-6 text-left leading-tight px-3.5 py-2.5 flex items-center">Real-time TyrePlex Cloud Backup</div>
+                    <div className="col-span-3 flex justify-center items-center bg-[#f0fdf4] py-2.5">
+                      <span className="w-4 h-4 bg-[#effff4] text-[#22c55e] border border-[#bbf7d0] rounded-full flex items-center justify-center text-[10px] font-bold">✓</span>
+                    </div>
+                    <div className="col-span-3 flex justify-center items-center py-2.5">
+                      <span className="w-4 h-4 bg-[#fef2f2] text-[#ef4444] border border-[#fecaca] rounded-full flex items-center justify-center text-[9px] font-bold">✕</span>
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-12 items-stretch font-medium text-[#4b5563]">
+                    <div className="col-span-6 text-left leading-tight px-3.5 py-2.5 flex items-center">Multi-Device Sync</div>
+                    <div className="col-span-3 flex justify-center items-center bg-[#f0fdf4] py-2.5">
+                      <span className="w-4 h-4 bg-[#effff4] text-[#22c55e] border border-[#bbf7d0] rounded-full flex items-center justify-center text-[10px] font-bold">✓</span>
+                    </div>
+                    <div className="col-span-3 flex justify-center items-center py-2.5">
+                      <span className="w-4 h-4 bg-[#fef2f2] text-[#ef4444] border border-[#fecaca] rounded-full flex items-center justify-center text-[9px] font-bold">✕</span>
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-12 items-stretch font-medium text-[#4b5563]">
+                    <div className="col-span-6 text-left leading-tight px-3.5 py-2.5 flex items-center">Instant Auto-Save</div>
+                    <div className="col-span-3 flex justify-center items-center bg-[#f0fdf4] py-2.5">
+                      <span className="w-4 h-4 bg-[#effff4] text-[#22c55e] border border-[#bbf7d0] rounded-full flex items-center justify-center text-[10px] font-bold">✓</span>
+                    </div>
+                    <div className="col-span-3 flex justify-center items-center py-2.5">
+                      <span className="w-4 h-4 bg-[#fef2f2] text-[#ef4444] border border-[#fecaca] rounded-full flex items-center justify-center text-[9px] font-bold">✕</span>
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-12 items-stretch font-medium text-[#4b5563]">
+                    <div className="col-span-6 text-left leading-tight px-3.5 py-2.5 flex items-center">Live Inventory Updates</div>
+                    <div className="col-span-3 flex justify-center items-center bg-[#f0fdf4] py-2.5">
+                      <span className="w-4 h-4 bg-[#effff4] text-[#22c55e] border border-[#bbf7d0] rounded-full flex items-center justify-center text-[10px] font-bold">✓</span>
+                    </div>
+                    <div className="col-span-3 flex justify-center items-center py-2.5">
+                      <span className="w-4 h-4 bg-[#fef2f2] text-[#ef4444] border border-[#fecaca] rounded-full flex items-center justify-center text-[9px] font-bold">✕</span>
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-12 items-stretch font-medium text-[#4b5563]">
+                    <div className="col-span-6 text-left leading-tight px-3.5 py-2.5 flex items-center">Offline Mode Support</div>
+                    <div className="col-span-3 flex justify-center items-center bg-[#f0fdf4] py-2.5">
+                      <span className="w-4 h-4 bg-[#effff4] text-[#22c55e] border border-[#bbf7d0] rounded-full flex items-center justify-center text-[10px] font-bold">✓</span>
+                    </div>
+                    <div className="col-span-3 flex justify-center items-center py-2.5">
+                      <span className="w-4 h-4 bg-[#effff4] text-[#22c55e] border border-[#bbf7d0] rounded-full flex items-center justify-center text-[10px] font-bold">✓</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Info footer text */}
+              <p className="text-[11px] text-[#b91c1c] font-semibold text-center mb-4 bg-[#fff1f2] p-2.5 rounded-xl border border-[#ffe4e6] leading-normal">
+                Without Backup, your data stays on this device and is at risk of loss.
+              </p>
+
+              {/* Actions */}
+              <div className="flex gap-2.5">
+                <button 
+                  onClick={() => setShowSyncDisableModal(false)}
+                  className="flex-1 py-2.5 border border-[#d1d5db] text-[#374151] rounded-xl font-bold text-[14px] hover:bg-slate-50 transition-colors active:scale-[0.98]"
+                >
+                  Cancel
+                </button>
+                <button 
+                  onClick={() => {
+                    setSyncEnabled(false);
+                    setShowSyncDisableModal(false);
+                  }}
+                  className="flex-1 py-2.5 bg-[#ef4444] text-white rounded-xl font-bold text-[14px] hover:bg-[#dc2626] transition-colors active:scale-[0.98] shadow-sm"
+                >
+                  Disable
                 </button>
               </div>
             </div>
@@ -798,7 +952,6 @@ function StockTickScreen({ onBack, onAddTyre, onFinish }: { onBack: () => void, 
         {/* Date */}
         <p className="text-[18px] font-bold text-[#000000]">Monday, Mar 23</p>
 
-
         {/* Search */}
         <div className="relative">
           <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#627085]" />
@@ -977,98 +1130,126 @@ function StockTickScreen({ onBack, onAddTyre, onFinish }: { onBack: () => void, 
               exit={{ y: "100%" }}
               transition={{ type: "spring", damping: 25, stiffness: 200 }}
               className="absolute bottom-0 left-0 right-0 bg-white rounded-t-[2rem] z-50 flex flex-col max-h-[85%]"
-            >
+             >
               <div className="flex justify-center pt-3 pb-2">
                 <div className="w-10 h-1 bg-[#d1d5db] rounded-full"></div>
               </div>
-              <div className="flex items-center justify-between px-6 pb-3 border-b border-[#e5e7eb]">
-                <h3 className="text-[18px] font-bold text-[#111827]">Add New Size</h3>
-                <button onClick={() => setShowManualAdd(null)} className="w-8 h-8 flex items-center justify-center text-[#9ca3af] hover:text-[#111827] transition-colors">
-                  <X className="w-5 h-5 stroke-[2.5]" />
-                </button>
+              
+              <div className="flex flex-col px-6 pb-3 border-b border-[#e5e7eb]">
+                <div className="flex items-center justify-between">
+                  <h3 className="text-[18px] font-bold text-[#111827]">Add New Size</h3>
+                  <button onClick={() => setShowManualAdd(null)} className="w-8 h-8 flex items-center justify-center text-[#9ca3af] hover:text-[#111827] transition-colors">
+                    <X className="w-5 h-5 stroke-[2.5]" />
+                  </button>
+                </div>
+                {mode === 'brands' ? (
+                  <p className="text-[13px] text-[#627085] font-semibold mt-1">
+                    Brand: <span className="text-[#111827] font-extrabold">{showManualAdd}</span>
+                  </p>
+                ) : (
+                  <p className="text-[13px] text-[#627085] font-semibold mt-1">
+                    Vehicle: <span className="text-[#111827] font-extrabold">{showManualAdd}</span>
+                  </p>
+                )}
               </div>
 
               <div className="flex-1 overflow-y-auto px-6 py-5">
                 {/* Dropdowns */}
                 <div className="flex flex-col gap-3 mb-5">
-                  <div className="relative">
-                    <select id="manual-brand" className="w-full appearance-none bg-white border border-[#d1d5db] rounded-xl px-4 py-3.5 text-[14px] font-bold text-[#111827] focus:outline-none focus:ring-2 focus:ring-[#ef4444]/20 focus:border-[#ef4444]/30 transition-all">
-                      <option value="" disabled selected>Select Brand</option>
-                      <option value="MRF">MRF</option>
-                      <option value="CEAT">CEAT</option>
-                      <option value="Apollo">Apollo</option>
-                      <option value="Michelin">Michelin</option>
-                      <option value="Bridgestone">Bridgestone</option>
-                      <option value="JK Tyre">JK Tyre</option>
-                    </select>
-                    <ChevronRight className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[#9ca3af] rotate-90 pointer-events-none" />
-                  </div>
-                  <div className="relative">
-                    <select id="manual-size" className="w-full appearance-none bg-white border border-[#d1d5db] rounded-xl px-4 py-3.5 text-[14px] font-bold text-[#111827] focus:outline-none focus:ring-2 focus:ring-[#ef4444]/20 focus:border-[#ef4444]/30 transition-all">
-                      <option value="" disabled selected>Select Size</option>
-                      <option value="145/80/R12">145/80/R12</option>
-                      <option value="155/80/R13">155/80/R13</option>
-                      <option value="165/70/R14">165/70/R14</option>
-                      <option value="165/80/R14">165/80/R14</option>
-                      <option value="175/80/R14">175/80/R14</option>
-                      <option value="185/65/R15">185/65/R15</option>
-                      <option value="195/55/R16">195/55/R16</option>
-                      <option value="205/55/R16">205/55/R16</option>
-                    </select>
-                    <ChevronRight className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[#9ca3af] rotate-90 pointer-events-none" />
-                  </div>
-                  {mode === 'vehicle' && (
-                    <div className="relative">
-                      <select className="w-full appearance-none bg-white border border-[#d1d5db] rounded-xl px-4 py-3.5 text-[14px] font-bold text-[#111827] focus:outline-none focus:ring-2 focus:ring-[#ef4444]/20 focus:border-[#ef4444]/30 transition-all">
-                        <option value="" disabled selected>Select Vehicle Type</option>
-                        <option value="Four Wheeler">Four Wheeler</option>
-                        <option value="Two Wheeler">Two Wheeler</option>
-                        <option value="Three Wheeler">Three Wheeler</option>
-                        <option value="Commercial">Commercial</option>
-                      </select>
-                      <ChevronRight className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[#9ca3af] rotate-90 pointer-events-none" />
-                    </div>
+                  {mode === 'brands' ? (
+                    <>
+                      {/* Size Select */}
+                      <div className="relative">
+                        <select id="manual-size" className="w-full appearance-none bg-white border border-[#e5e7eb] rounded-xl px-4 py-3.5 text-[14px] font-bold text-[#111827] focus:outline-none focus:ring-2 focus:ring-[#ef4444]/20 focus:border-[#ef4444]/30 transition-all">
+                          <option value="" disabled selected>Select Size</option>
+                          <option value="145/80/R12">145/80/R12</option>
+                          <option value="155/80/R13">155/80/R13</option>
+                          <option value="165/70/R14">165/70/R14</option>
+                          <option value="165/80/R14">165/80/R14</option>
+                          <option value="175/80/R14">175/80/R14</option>
+                          <option value="185/65/R15">185/65/R15</option>
+                          <option value="195/55/R16">195/55/R16</option>
+                          <option value="205/55/R16">205/55/R16</option>
+                        </select>
+                        <ChevronRight className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[#627085] pointer-events-none" />
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      {/* Brand Select */}
+                      <div className="relative">
+                        <select id="manual-brand" className="w-full appearance-none bg-white border border-[#e5e7eb] rounded-xl px-4 py-3.5 text-[14px] font-bold text-[#111827] focus:outline-none focus:ring-2 focus:ring-[#ef4444]/20 focus:border-[#ef4444]/30 transition-all">
+                          <option value="" disabled selected>Select Brand</option>
+                          <option value="MRF">MRF</option>
+                          <option value="CEAT">CEAT</option>
+                          <option value="Apollo">Apollo</option>
+                          <option value="Michelin">Michelin</option>
+                          <option value="Bridgestone">Bridgestone</option>
+                          <option value="JK Tyre">JK Tyre</option>
+                        </select>
+                        <ChevronRight className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[#627085] pointer-events-none" />
+                      </div>
+
+                      {/* Size Select */}
+                      <div className="relative">
+                        <select id="manual-size" className="w-full appearance-none bg-white border border-[#e5e7eb] rounded-xl px-4 py-3.5 text-[14px] font-bold text-[#111827] focus:outline-none focus:ring-2 focus:ring-[#ef4444]/20 focus:border-[#ef4444]/30 transition-all">
+                          <option value="" disabled selected>Select Size</option>
+                          <option value="145/80/R12">145/80/R12</option>
+                          <option value="155/80/R13">155/80/R13</option>
+                          <option value="165/70/R14">165/70/R14</option>
+                          <option value="165/80/R14">165/80/R14</option>
+                          <option value="175/80/R14">175/80/R14</option>
+                          <option value="185/65/R15">185/65/R15</option>
+                          <option value="195/55/R16">195/55/R16</option>
+                          <option value="205/55/R16">205/55/R16</option>
+                        </select>
+                        <ChevronRight className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[#627085] pointer-events-none" />
+                      </div>
+                    </>
                   )}
                 </div>
-
-                {/* Upload Image */}
-                <label className="w-full block cursor-pointer">
-                  <div className="border-2 border-dashed border-[#e5e7eb] rounded-2xl p-5 flex flex-col items-center justify-center gap-2 hover:border-[#ef4444]/40 transition-colors">
-                    <div className="w-11 h-11 rounded-full bg-[#fef2f2] flex items-center justify-center">
-                      <Camera className="w-5 h-5 text-[#ef4444] stroke-[2]" />
-                    </div>
-                    <p className="text-[13px] font-bold text-[#111827]">Upload Tyre Image</p>
-                    <p className="text-[11px] text-[#9ca3af]">Tap to upload photo or invoice</p>
-                  </div>
-                  <input type="file" accept="image/*" className="hidden" />
-                </label>
               </div>
 
-              {/* Add Button */}
-              <div className="px-6 pb-6 pt-2">
+              {/* Save Button */}
+              <div className="px-6 pb-6 pt-2 border-t border-[#e5e7eb]/10">
                 <button 
                   onClick={() => {
-                    const brandEl = document.getElementById('manual-brand') as HTMLSelectElement;
-                    const sizeEl = document.getElementById('manual-size') as HTMLSelectElement;
-                    const brand = brandEl?.value || (mode === 'brands' ? (showManualAdd || '') : '');
-                    const size = sizeEl?.value || '';
+                    let brand = '';
+                    let model = '';
+                    let size = '';
+                    let category = '';
+
+                    if (mode === 'brands') {
+                      const sizeEl = document.getElementById('manual-size') as HTMLSelectElement;
+                      brand = showManualAdd || '';
+                      model = '';
+                      size = sizeEl?.value || '';
+                      category = 'Four Wheeler';
+                    } else {
+                      const brandEl = document.getElementById('manual-brand') as HTMLSelectElement;
+                      const sizeEl = document.getElementById('manual-size') as HTMLSelectElement;
+                      brand = brandEl?.value || '';
+                      model = '';
+                      size = sizeEl?.value || '';
+                      category = showManualAdd || 'Four Wheeler';
+                    }
+
                     if (brand && size) {
                       setInventory(prev => [...prev, {
                         id: Date.now(),
                         brand: brand,
-                        model: '',
+                        model: model,
                         size: size,
                         expected: 0,
                         counted: null,
-                        category: mode === 'vehicle' ? (showManualAdd || 'Four Wheeler') : 'Four Wheeler'
+                        category: category
                       }]);
                       setShowManualAdd(null);
                     }
                   }}
-                  className="w-full py-4 bg-[#ef4444] text-white rounded-xl font-bold text-[15px] shadow-[0_4px_12px_rgba(239,68,68,0.25)] active:scale-[0.98] transition-transform flex items-center justify-center gap-2"
+                  className="w-full py-4 bg-[#ef4444] text-white rounded-[14px] font-bold text-[15px] shadow-[0_4px_12px_rgba(239,68,68,0.25)] active:scale-[0.98] transition-transform flex items-center justify-center gap-2"
                 >
-                  <Save className="w-4 h-4 stroke-[2.5]" />
-                  Save to Inventory
+                  Add
                 </button>
               </div>
             </motion.div>

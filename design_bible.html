@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>91Wheels Design Bible - Brand Identity &amp; Visual Guidelines</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Inter:wght@400;600&display=swap');
+    
+    * {
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Poppins', sans-serif;
+      color: #142338;
+      margin: 0;
+      padding: 0;
+      background-color: #ffffff;
+      line-height: 1.6;
+      font-size: 14px;
+    }
+    
+    @page {
+      size: A4;
+      margin: 20mm;
+      @bottom-right {
+        content: counter(page);
+      }
+    }
+    
+    .page-break {
+      page-break-after: always;
+    }
+    
+    .cover-page {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 40px 0;
+      page-break-after: always;
+    }
+    
+    .header-logo {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2px solid #f1f5f9;
+      padding-bottom: 20px;
+      margin-bottom: 40px;
+    }
+    
+    .logo-container img {
+      height: 48px;
+      object-fit: contain;
+    }
+    
+    .doc-tag {
+      background-color: #0165fe;
+      color: #ffffff;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: 9999px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    
+    .cover-title-group {
+      margin-top: 100px;
+    }
+    
+    .cover-title {
+      font-size: 42px;
+      font-weight: 800;
+      color: #142338;
+      line-height: 1.1;
+      margin: 0;
+    }
+    
+    .cover-subtitle {
+      font-size: 20px;
+      color: #43525e;
+      font-weight: 400;
+      margin-top: 15px;
+      margin-bottom: 0;
+    }
+    
+    .cover-footer {
+      border-top: 2px solid #f1f5f9;
+      padding-top: 20px;
+      font-size: 12px;
+      color: #798189;
+      display: flex;
+      justify-content: space-between;
+    }
+    
+    h1 {
+      font-size: 24px;
+      font-weight: 700;
+      color: #142338;
+      border-bottom: 2px solid #0165fe;
+      padding-bottom: 8px;
+      margin-top: 40px;
+      margin-bottom: 20px;
+      page-break-inside: avoid;
+    }
+    
+    h2 {
+      font-size: 18px;
+      font-weight: 600;
+      color: #142338;
+      margin-top: 30px;
+      margin-bottom: 15px;
+      page-break-inside: avoid;
+    }
+    
+    h3 {
+      font-size: 15px;
+      font-weight: 600;
+      color: #43525e;
+      margin-top: 20px;
+      margin-bottom: 10px;
+      page-break-inside: avoid;
+    }
+    
+    p {
+      margin-top: 0;
+      margin-bottom: 15px;
+      text-align: justify;
+    }
+    
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 30px;
+      page-break-inside: avoid;
+    }
+    
+    th, td {
+      padding: 10px 12px;
+      text-align: left;
+      border-bottom: 1px solid #dae1e5;
+      font-size: 13px;
+    }
+    
+    th {
+      background-color: #dae1e5;
+      color: #142338;
+      font-weight: 600;
+    }
+    
+    .color-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+      margin-bottom: 30px;
+      page-break-inside: avoid;
+    }
+    
+    .color-card {
+      border: 1px solid #dae1e5;
+      border-radius: 8px;
+      padding: 12px;
+      display: flex;
+      align-items: center;
+      background-color: #dae1e5;
+    }
+    
+    .color-chip {
+      width: 50px;
+      height: 50px;
+      border-radius: 6px;
+      margin-right: 15px;
+      border: 1px solid rgba(0,0,0,0.05);
+      flex-shrink: 0;
+    }
+    
+    .color-info {
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .color-name {
+      font-weight: 600;
+      font-size: 14px;
+      color: #142338;
+    }
+    
+    .color-hex {
+      font-family: monospace;
+      font-size: 12px;
+      color: #43525e;
+    }
+    
+    .color-role {
+      font-size: 11px;
+      color: #798189;
+      margin-top: 2px;
+    }
+    
+    .callout {
+      background-color: #e6ecf1;
+      border-left: 4px solid #0165fe;
+      padding: 15px;
+      border-radius: 0 8px 8px 0;
+      margin-bottom: 25px;
+      font-size: 13px;
+      page-break-inside: avoid;
+    }
+    
+    .callout-title {
+      font-weight: 600;
+      color: #142338;
+      margin-bottom: 5px;
+    }
+    
+    .callout-content {
+      color: #43525e;
+    }
+    
+    .ribbon-usage {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      background-color: #142338;
+      border-radius: 12px;
+      color: #ffffff;
+      margin-bottom: 25px;
+      page-break-inside: avoid;
+    }
+    
+    code {
+      font-family: monospace;
+      background-color: #dae1e5;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 12px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Cover Page -->
+  <div class="cover-page">
+    <div class="header-logo">
+      <div class="logo-container">
+        <img src="https://images.91wheels.com/images/91wheels-logo-primary.png?w=336&q=60" alt="91Wheels Logo" />
+      </div>
+      <div>
+        <span class="doc-tag">Brand Bible</span>
+      </div>
+    </div>
+    
+    <div class="cover-title-group">
+      <h1 class="cover-title">91Wheels Brand Identity</h1>
+      <p class="cover-subtitle">Design Bible &amp; Visual Guidelines</p>
+    </div>
+    
+    <div class="cover-footer">
+      <div>
+        <strong>Created By:</strong> Gemini Pair Programming Assistant
+      </div>
+      <div>
+        <strong>Date:</strong> July 17, 2026
+      </div>
+      <div>
+        <strong>Version:</strong> v1.0
+      </div>
+    </div>
+  </div>
+
+  <!-- Content Pages -->
+  <div>
+    <h1>1. Brand Vision &amp; Purpose</h1>
+    <p>
+      At the heart of the 91Wheels identity is a commitment to transforming how automotive consumers research and buy vehicles in India. We speak to a mobile-first generation that expects swift, clear, and highly personalized digital products.
+    </p>
+    
+    <div class="callout">
+      <div class="callout-title">Simplify Personal Mobility</div>
+      <div class="callout-content">
+        We make automotive research clear, empowering, and trustworthy by organizing complex technical data into accessible user value.
+      </div>
+    </div>
+
+    <h2>Core Archetypes (Our Voice)</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Archetype</th>
+          <th>Weight</th>
+          <th>Attributes</th>
+          <th>Creative Expression</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>The Leader</strong></td>
+          <td>50%</td>
+          <td>Responsible, Organized, Visionary</td>
+          <td>Confident, authoritative, progressive. Speaks decisively without arrogance.</td>
+        </tr>
+        <tr>
+          <td><strong>The Sage</strong></td>
+          <td>30%</td>
+          <td>Wise, Trustworthy, Expert</td>
+          <td>Knowledgeable, reliable, insightful. Shares deep automotive expertise in an accessible voice.</td>
+        </tr>
+        <tr>
+          <td><strong>The Creator</strong></td>
+          <td>10%</td>
+          <td>Innovative, Proactive, Fresh</td>
+          <td>Tech-forward and pioneering. Reimagines traditional research paradigms with fresh formats.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="page-break"></div>
+
+    <h1>2. Core Colors (Primary &amp; Secondary)</h1>
+    <p>
+      Our color system relies on high-contrast pairings. The primary <strong>Nitro Blue</strong> drives digital engagement, while <strong>Midnight Dark</strong> anchors typographic structure.
+    </p>
+
+    <h2>Primary Colors</h2>
+    <div class="color-grid">
+      <div class="color-card">
+        <div class="color-chip" style="background-color: #0165fe;"></div>
+        <div class="color-info">
+          <span class="color-name">Nitro Blue</span>
+          <span class="color-hex">#0165FE</span>
+          <span class="color-role">Primary logo, CTAs, active highlights</span>
+        </div>
+      </div>
+      <div class="color-card">
+        <div class="color-chip" style="background-color: #142338;"></div>
+        <div class="color-info">
+          <span class="color-name">Midnight Dark</span>
+          <span class="color-hex">#142338</span>
+          <span class="color-role">Headers, dark backgrounds, high-emphasis text</span>
+        </div>
+      </div>
+    </div>
+
+    <h2>Secondary &amp; Neutral Colors</h2>
+    <div class="color-grid">
+      <div class="color-card">
+        <div class="color-chip" style="background-color: #f9d816;"></div>
+        <div class="color-info">
+          <span class="color-name">Sporty Yellow</span>
+          <span class="color-hex">#F9D816</span>
+          <span class="color-role">Active status markers, badges, and accents</span>
+        </div>
+      </div>
+      <div class="color-card">
+        <div class="color-chip" style="background-color: #a9afb5;"></div>
+        <div class="color-info">
+          <span class="color-name">Steel Grey</span>
+          <span class="color-hex">#A9AFB5</span>
+          <span class="color-role">Divider lines, boundaries, default icon outlines</span>
+        </div>
+      </div>
+      <div class="color-card">
+        <div class="color-chip" style="background-color: #43525e;"></div>
+        <div class="color-info">
+          <span class="color-name">Titanium Grey</span>
+          <span class="color-hex">#43525E</span>
+          <span class="color-role">Secondary body copy, subtitles</span>
+        </div>
+      </div>
+      <div class="color-card">
+        <div class="color-chip" style="background-color: #dae1e5;"></div>
+        <div class="color-info">
+          <span class="color-name">Frost Silver</span>
+          <span class="color-hex">#DAE1E5</span>
+          <span class="color-role">Screen backdrops, light card panels</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-break"></div>
+
+    <h1>3. Typography &amp; Hierarchy</h1>
+    <p>
+      Poppins is the primary typeface for 91Wheels. It maintains a clean, geometric line weight that optimizes readability on high-density screens.
+    </p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Level</th>
+          <th>Font Weight</th>
+          <th>Size (Pixels)</th>
+          <th>Context &amp; Usage</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Headlines</strong></td>
+          <td>Bold</td>
+          <td>24px - 36px</td>
+          <td>Main hero sections, primary titles</td>
+        </tr>
+        <tr>
+          <td><strong>Subheads</strong></td>
+          <td>SemiBold</td>
+          <td>16px - 20px</td>
+          <td>Intermediate page blocks, card labels</td>
+        </tr>
+        <tr>
+          <td><strong>Body Text</strong></td>
+          <td>Regular</td>
+          <td>14px</td>
+          <td>Paragraphs, specifications lists, comparisons</td>
+        </tr>
+        <tr>
+          <td><strong>Metadata</strong></td>
+          <td>Regular / Medium</td>
+          <td>10px - 12px</td>
+          <td>Helper descriptions, time stamps, ratings</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h1>4. Visual Signatures &amp; Photography</h1>
+    
+    <h2>The Curving Ribbon</h2>
+    <p>
+      Our key visual signature is an organic, curving ribbon line that indicates connectivity and active paths.
+    </p>
+    <div class="ribbon-usage">
+      <span style="font-family: monospace; font-size: 13px;">[Curving Ribbon Visual Accent - Midnight Backdrop]</span>
+    </div>
+
+    <h2>Photography Rules</h2>
+    <ul>
+      <li><strong>Hero Placement:</strong> Centralized placement of the vehicle with a 65% White to 35% Asphalt Gray gradient blend.</li>
+      <li><strong>Angles:</strong> Mandatory three-quarter shots to maximize vehicle details and structural dimension.</li>
+      <li><strong>Line Iconography:</strong> Line weight of 2px with rounded nodes for consistent, minimal icon graphics.</li>
+    </ul>
+  </div>
+
+</body>
+</html>
